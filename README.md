@@ -1,15 +1,16 @@
 # Dev Workflow Pack
 
-Twelve skills plus hook-enforced session memory, packaged as one Claude Code plugin.
-
-**v2.0.0:** every skill rebuilt through the
+Twelve development-workflow skills rebuilt through the
 [skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
-six-gate pipeline. Each skill now carries an explicit Capability + Trigger +
-Boundary description (so skills fire when they should and stay silent when a
-sibling owns the task), an Iron Law stating its one non-negotiable rule as
-"X because Y" reasoning, and a Red Flags table of agent-introspected
-rationalizations paired with the correct behavior. Pairwise description overlap
-was checked across all twelve before release.
+six-gate pipeline, plus hook-enforced session memory and branch protection. One
+Claude Code plugin.
+
+**v2.0.0:** each skill now carries an explicit Capability + Trigger + Boundary
+description (so skills fire when they should and stay silent when a sibling owns
+the task), an Iron Law stating its one non-negotiable rule as "X because Y"
+reasoning, and a Red Flags table of agent-introspected rationalizations paired
+with the correct behavior. Pairwise description overlap was checked across all
+twelve before release.
 
 ## What the hooks do
 
