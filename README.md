@@ -3,7 +3,7 @@
 Twelve skills plus hook-enforced session memory, packaged as one Claude Code plugin.
 
 **v2.0.0:** every skill rebuilt through the
-[skill-architect](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
+[skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
 six-gate pipeline. Each skill now carries an explicit Capability + Trigger +
 Boundary description (so skills fire when they should and stay silent when a
 sibling owns the task), an Iron Law stating its one non-negotiable rule as
