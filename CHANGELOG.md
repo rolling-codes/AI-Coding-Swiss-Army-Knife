@@ -5,29 +5,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
-## [2.2.0] - 2026-09-15
-
-### Added
-
-- `ai-hygiene` skill: keeps AI fingerprints out of your work across its whole
-  lifecycle. It prevents them while you write new code (reuse-first, simplest thing
-  that works, a complexity/size budget, and verified dependencies, backed by checker
-  scripts you can run), and detects or removes them in existing code and prose, with a
-  watermark reference for the technical case. One mode-routed skill covering prevention,
-  code and prose auditing, humanizing, and watermark questions.
-
-### Removed
-
-- `lean-code` skill: its preventive code pillars are now Mode 1 of `ai-hygiene`, so the
-  standalone skill was retired. If you routed work to `lean-code`, route it to
-  `ai-hygiene` instead.
-
-### Changed
-
-- dev-workflow's routing table and the README now point at `ai-hygiene`, with a new note
-  distinguishing it (AI stylistic fingerprints: over-engineering, duplication, AI prose
-  tells, watermarks) from `code-review` (correctness bugs in a diff).
-
 ## [2.1.0] - 2026-07-15
 
 ### Added

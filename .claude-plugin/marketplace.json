@@ -8,7 +8,7 @@
     {
       "name": "dev-workflow-pack",
       "source": "./",
-      "description": "Thirteen skills for the whole development lifecycle — writing and de-AI-ing code, review, testing, release, and docs — built through the skill-creator six-gate pipeline, plus hook-enforced session memory and branch protection.",
+      "description": "Twelve development-workflow skills rebuilt through the skill-architect six-gate pipeline, plus hook-enforced session memory and branch protection.",
       "category": "development"
     }
   ]

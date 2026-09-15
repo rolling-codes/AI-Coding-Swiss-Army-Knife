@@ -74,7 +74,6 @@ each sibling carries guardrails this skill does not duplicate:
 | Draft a pull request description | → **pr-description** |
 | Update CHANGELOG.md for a new version | → **changelog** |
 | Validate / checklist before tagging a release | → **release-prep** |
-| Write new code well, or audit code/prose for AI tells (de-AI, watermarks) | → **ai-hygiene** |
 | Review my own diff before merging (or get it reviewed) | → **code-review** |
 | Rank or consolidate bug findings from multiple sources | → **bug-triage** |
 | New feature/change introduced mid-build | → **scope-creep** (fires automatically) |
@@ -95,13 +94,6 @@ is the disambiguator:
 A request can trigger more than one — "review this before v2.0" reasonably means
 **architecture-review** on the code and **docs-audit** on the docs, as two separate
 passes.
-
-**Disambiguating ai-hygiene vs code-review** — both touch "code quality", but on
-different axes: **ai-hygiene** handles *AI stylistic fingerprints* (over-engineering,
-duplication, verbose naming, AI prose tells, watermarks) and prevents them while new code
-is written; **code-review** finds *correctness* bugs in a finished diff. "Does this look
-AI / is this over-engineered / humanize this" → ai-hygiene; "is this correct / any bugs /
-ready to merge" → code-review.
 
 If the request matches a sibling, invoke that skill and return. Everything else
 continues below.
