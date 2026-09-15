@@ -1,0 +1,18 @@
+# Boundary cases — ai-hygiene should stay silent; a sibling or nothing owns these.
+- prompt: "Fix the off-by-one error in this loop."
+  expected: false   # trivial in-place edit
+
+- prompt: "Rename this variable across the file."
+  expected: false   # trivial rename
+
+- prompt: "Review my diff for correctness bugs before I merge."
+  expected: false   # correctness/bug review -> code-review
+
+- prompt: "Is this authentication code vulnerable to SQL injection?"
+  expected: false   # security correctness -> security review, not AI-pattern hygiene
+
+- prompt: "Write me a haiku about the ocean."
+  expected: false   # ordinary writing task, no AI-detection angle
+
+- prompt: "What does commit a3f9c12 change?"
+  expected: false   # git history question
