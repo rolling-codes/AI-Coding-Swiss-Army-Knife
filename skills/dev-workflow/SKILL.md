@@ -10,6 +10,8 @@ description: >
   PR descriptions, changelog entries, release checks, code review passes,
   bug triage, mid-build scope flags, architecture/docs/context audits,
   test generation) — route to that skill and return.
+allowed-tools: [Read, Grep, Glob, Bash, Edit, Write, Agent]
+model: sonnet
 ---
 
 # dev-workflow
@@ -105,6 +107,14 @@ ready to merge" → code-review.
 
 If the request matches a sibling, invoke that skill and return. Everything else
 continues below.
+
+**When routing is ambiguous or two skills seem to overlap** — load
+`references/skill-routing.md`. It carries the full skill-selection decision
+process, the role each skill can play (primary / supporting / follow-up /
+escalation / irrelevant), the pairwise overlap table for every pair that can both
+fire, conflict-precedence rules, and the cross-skill handoff contract. Load it
+only when the tables above don't already resolve the task — the common cases
+don't need it.
 
 ## The Pipeline
 

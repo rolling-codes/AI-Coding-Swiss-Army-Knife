@@ -8,6 +8,8 @@ description: >
   expands surface area; NOT for the original task itself (dev-workflow), NOT
   for ranking bug findings (bug-triage), and NOT for defining scope on a
   project that hasn't started.
+allowed-tools: [Read]
+model: haiku
 ---
 
 # Scope Creep Detection Skill
@@ -79,6 +81,10 @@ For Expansions and Pivots, assess:
 
 ## Step 4: Present the Assessment
 
+**Every classification, including Refinements, requires visible output.** A Refinement
+passes through in one line; an Expansion or Pivot pauses for a decision. Silence is not a
+valid output for any mid-build addition.
+
 Format your response clearly:
 
 ```
@@ -116,6 +122,7 @@ For **🛑 Pause**, always present all three options and wait for the user to ch
 - Keep the assessment short — this shouldn't feel like a lecture
 - If the user says "just do it anyway", proceed — your job is to flag, not gatekeep
 - If the original scope was never clearly defined, say so — vague origins make everything harder to assess
+- Trigger keywords ("while we're at it", "can we also", "one more thing", "quickly add", "let's also", "while you're in there") are sufficient to trigger this skill but not necessary — any mid-build addition that changes the original goal or expands surface area triggers it regardless of phrasing
 - This skill fires automatically during **dev-workflow** and **code-review** sessions — no explicit invocation needed
 
 ---

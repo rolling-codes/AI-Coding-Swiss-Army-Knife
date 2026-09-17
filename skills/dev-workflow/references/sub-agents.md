@@ -3,6 +3,13 @@
 Claude decides autonomously when to spin up sub-agents. This reference defines the
 decision logic, delegation patterns, and how to aggregate results.
 
+## Model for Sub-Agents
+
+Resolve the model alias for each sub-agent via dev-workflow's `model-registry.json`
+(`fast` → Haiku-class, `standard` → Sonnet-class, `deep` → Opus/Fable-class).
+Default to `standard` when dispatching the code-reviewer or other analysis agents.
+Never hardcode a model name in a dispatch message.
+
 ## When to Delegate (Autonomous Decision)
 
 Delegate when ANY of the following are true:

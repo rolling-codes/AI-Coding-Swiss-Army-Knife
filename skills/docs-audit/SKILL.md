@@ -8,6 +8,8 @@ description: >
   or after a release/major refactor before tagging; NOT for session context
   (context-compression), NOT for code structure (architecture-review), and
   NOT for authoring substantial net-new documentation from scratch.
+allowed-tools: [Read, Grep, Glob, Bash, Edit]
+model: sonnet
 ---
 
 # Docs Audit Skill

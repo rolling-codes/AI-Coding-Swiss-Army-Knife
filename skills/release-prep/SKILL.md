@@ -8,6 +8,8 @@ description: >
   to tag"; NOT for writing the changelog itself (changelog), NOT for the tag
   and publish operations (dev-workflow), and NOT for authoring tests
   (test-strategy).
+allowed-tools: [Bash, Read, Grep]
+model: sonnet
 ---
 
 # Release Prep
@@ -51,7 +53,9 @@ ls package.json go.mod Cargo.toml 2>/dev/null       # Node / Go / Rust
 ### Python
 ```bash
 grep -E '^version\s*=' pyproject.toml | head -1
-grep -rE '__version__\s*=' src/ easycord/ | head -3
+# __version__ usually lives under the package source root — adjust the path to
+# the project's own layout (src/, the importable package dir, etc.):
+grep -rE '__version__\s*=' src/ 2>/dev/null | head -3
 ```
 
 ### .NET
@@ -141,6 +145,15 @@ Report the failure count and the first failing test name. Suggest next steps:
 - Fix the failures, then re-run release-prep
 - Open a GitHub issue to track each failure: `gh issue create --title "test: [test name] failing on release branch" --label "bug"`
 - Or, if failures are known/pre-existing and intentionally deferred: ask the user to confirm before proceeding
+
+Regardless of user confirmation, the checklist shows **❌** for failing tests — user
+confirmation changes the *decision* (whether to ship anyway), not the finding. A
+confirmed ❌ in the checklist is not the same as a ✅.
+
+**If no test framework is detected:** document as `❌ No test suite found — not
+verified.` This is never a silent pass. "No test framework" is not an N/A state —
+the release checklist has no N/A column. An absent test suite is a finding, not an
+exemption.
 
 ---
 

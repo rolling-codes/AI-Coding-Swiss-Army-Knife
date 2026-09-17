@@ -57,22 +57,21 @@ ritual on trivial changes is its own waste. Four pillars, in order:
    If you feel the pull to add flexibility, name the concrete real future use or cut it.
 3. **Complexity / size budget** — functions <~50 lines, files <~800, nesting ≤4 (early
    returns), no needless mutation. Complexity is invisible to token-by-token generation,
-   so **confirm with `scripts/complexity_check.py <path>`** rather than trusting a read.
+   so **confirm with `"${CLAUDE_PLUGIN_ROOT}/skills/ai-hygiene/scripts/complexity_check.py" <path>`** rather than trusting a read. (If `${CLAUDE_PLUGIN_ROOT}` is unset, skip this step and note the limitation.)
 4. **Dependency verification** — before importing third-party code, confirm it exists and
-   is in the manifest; prefer stdlib or an existing dep. **`scripts/verify_deps.py <path>
-   [--registry]`** separates real-but-undeclared from hallucinated (slopsquatting).
+   is in the manifest; prefer stdlib or an existing dep. **`"${CLAUDE_PLUGIN_ROOT}/skills/ai-hygiene/scripts/verify_deps.py" <path>
+   [--registry]`** separates real-but-undeclared from hallucinated (slopsquatting). (If `${CLAUDE_PLUGIN_ROOT}` is unset, skip this step and note the limitation.)
 
-Before handing new code back, run the orchestrator with Bash — `python
-scripts/lean_check.py <path>` (exit 0 = pillars 3 & 4 clean). Evidence and citations:
+Before handing new code back, run the orchestrator with Bash — `python "${CLAUDE_PLUGIN_ROOT}/skills/ai-hygiene/scripts/lean_check.py" <path>` (exit 0 = pillars 3 & 4 clean; if `${CLAUDE_PLUGIN_ROOT}` is unset, skip and note the limitation). Evidence and citations:
 `references/research-basis.md`.
 
 ## Mode 2: Code Audit
 
 Scan existing code for AI structural/architectural smells — over-commenting, verbose
 naming, unnecessary abstraction, god class, parameter explosion, copy-paste duplication,
-TODO pileup, scaffolding bloat. **Run `scripts/lean_check.py <path>` first** to catch the
+TODO pileup, scaffolding bloat. **Run `"${CLAUDE_PLUGIN_ROOT}/skills/ai-hygiene/scripts/lean_check.py" <path>` first** to catch the
 measurable ones (complexity, size, unverified imports) deterministically, then read the
-rest by hand. Full smell definitions and the output template: `references/fingerprints.md`
+rest by hand. (If `${CLAUDE_PLUGIN_ROOT}` is unset, skip the script step and note the limitation.) Full smell definitions and the output template: `references/fingerprints.md`
 §3–4. Quote the specific lines for every finding.
 
 ## Mode 3: Prose Audit

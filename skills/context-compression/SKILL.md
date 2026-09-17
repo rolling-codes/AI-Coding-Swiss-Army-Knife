@@ -5,9 +5,11 @@ description: >
   decide keep vs. drop, and age out stale context — when the context budget
   crosses ~50%, before a deliberate manual /compact, or on "context is getting
   long", "summarize what we've done", "what can we drop"; NOT for
-  documentation drift (docs-audit), NOT for code structure (architecture-
-  review), and NOT for routine session-memory writes outside a compression
+  documentation drift (docs-audit), NOT for code structure (architecture-review),
+  and NOT for routine session-memory writes outside a compression
   event (dev-workflow's memory reference).
+allowed-tools: [Read, Edit]
+model: haiku
 ---
 
 # Context Compression Skill
@@ -77,7 +79,9 @@ reload has failed at its one job.
 **Done:** [bullet list, past tense, one line each]
 **Decisions:** [decision — one-line reason], ...
 **Open:** [what's still pending, in priority order]
-**Dropped:** [category] — [why safe to drop, e.g. "recoverable from git log"]
+**Dropped:**
+  - [what was dropped] — [why safe to drop, e.g. "recoverable from git log"]
+  - [next item if any]
 ```
 
 If dev-workflow is installed, this maps directly onto `.claude/memory.json`'s
