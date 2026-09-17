@@ -44,6 +44,7 @@ reveal motivation, probe `git log` commit messages before concluding it is obvio
 | "The diff came back empty, but the user asked for a PR body, so I'll write one anyway." | An empty diff means wrong base branch, already merged, or already on main. A PR body over no diff is documentation of nothing. | Fire the guard: report the empty diff and the likely causes, produce no description. |
 | "The Why is obvious from the What — I'll skip that section." | Why is the section reviewers judge the approach by. Skipping it moves the motivation question into review comments, where it costs a round-trip. | Write Why even when it feels redundant; one sentence beats absence. |
 | "The diff is large but the user just wants the description — a size note would be off-topic." | PR size is reviewability. A 600-line diff reviewed as one unit means reviewers must read everything before judging any part. A split recommendation is part of the description service, not an interruption of it. | Run the size check (Step 0). If > 600 lines and not a mechanical rename/migration, output the split recommendation before proceeding. |
+| "I've listed all the changes with bullet points — that's thorough." | Bullet points name things; they don't show them. A reviewer who reads "added Quick examples to all 13 skills" has zero information about what a Quick example looks like, whether it's useful, or what format it produces. Naming a change is not describing it. | For each significant change, include one concrete illustration: before/after diff snippet, a quoted excerpt from the new content, or a representative example of the output. |
 
 ---
 
@@ -68,14 +69,15 @@ If the user confirms to proceed anyway, note the size in the What Changed sectio
 ## 1. Gather context
 
 ```bash
-git log main..HEAD --oneline --no-merges
-git diff main..HEAD --stat
-git diff main..HEAD | head -600
+BASE=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null | sed 's|^[^/]*/||' || echo main)
+git log "$(git merge-base HEAD "$BASE")"..HEAD --oneline --no-merges
+git diff "$(git merge-base HEAD "$BASE")"...HEAD --stat
+git diff "$(git merge-base HEAD "$BASE")"...HEAD
 ```
 
-**Guard:** if `git diff main..HEAD` is empty, check whether you're already on main or the
-branch has been merged. Tell the user: "No diff found between this branch and main —
-you may already be on main, or this branch has been merged." Don't produce an empty PR.
+**Guard:** if the diff is empty, check whether you're already on the base branch or the
+branch has been merged. Tell the user: "No diff found — you may already be on the base
+branch, or this branch has been merged." Don't produce an empty PR.
 
 Also check the branch name for ticket numbers (e.g. `feature/PROJ-123-add-auth`) and
 any issue references in commit messages. If there's no git context (user pasted a diff),
@@ -108,7 +110,16 @@ This section is mandatory — a PR without motivation is unreviewable in context
 
 ## What Changed
 
-[Approach taken and non-obvious design decisions. Skip what the diff already shows.]
+[Approach taken. For each significant change, include one concrete illustration —
+a before/after snippet, a quoted excerpt, or a representative example. A reviewer
+should be able to judge the quality of a change from this section alone; if they
+have to open the file to understand what changed, this section has failed.
+
+Example of what this looks like in practice:
+- Don't write: "Updated the diff range in pr-description."
+- Do write: "Fixed diff range: was `git diff main..HEAD` (included base-branch commits on diverged branches), now `git diff $(git merge-base HEAD $BASE)...HEAD`."
+- Don't write: "Added Quick examples to all 13 skills."
+- Do write: "Each skill body now opens with two in/out pairs before the Iron Law, e.g. for code-review: **In:** 'anything I missed before I push?' **Out:** §A verdict block with Critical/Important/Minor findings."]
 
 ## Risk & Rollback
 
