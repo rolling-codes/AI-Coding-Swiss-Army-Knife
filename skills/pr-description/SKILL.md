@@ -16,13 +16,25 @@ model: sonnet
 Produce a clear, complete pull request description that gives reviewers everything they
 need without making them read the entire diff.
 
+Standards reference: load `skills/dev-workflow/references/pr-standards.md` for size
+thresholds, required section definitions, and the PR hygiene checklist.
+
+## Quick examples
+
+**In:** "write a PR description for this branch"
+**Out:** size check (Step 0), then 5-section template (Context/Why, What Changed, Risk & Rollback, How to Test, Reviewer Focus) + PR hygiene checklist
+
+**In:** "we're opening a merge request, what should it say?"
+**Out:** same; if diff > 600 lines, split recommendation precedes the description
+
 ## Iron Law
 
 The description is grounded in `git log` / `git diff` against the base branch, never
 in conversation memory — because a PR body written from memory describes the intended
 change while reviewers review the branch's actual content, and the two diverge
 whenever the branch contains earlier commits or is missing something you think you
-pushed.
+pushed. A PR missing a Context/Why section is incomplete — if the diff alone does not
+reveal motivation, probe `git log` commit messages before concluding it is obvious.
 
 ## Red Flags — Rationalizations to Refuse
 
@@ -31,6 +43,25 @@ pushed.
 | "I've been working on this branch all session — I can write the PR from memory." | The branch may contain commits from before the session, or lack changes you think are pushed. Memory describes intent; the diff is the artifact under review. | Run the gather-context commands first, every time. |
 | "The diff came back empty, but the user asked for a PR body, so I'll write one anyway." | An empty diff means wrong base branch, already merged, or already on main. A PR body over no diff is documentation of nothing. | Fire the guard: report the empty diff and the likely causes, produce no description. |
 | "The Why is obvious from the What — I'll skip that section." | Why is the section reviewers judge the approach by. Skipping it moves the motivation question into review comments, where it costs a round-trip. | Write Why even when it feels redundant; one sentence beats absence. |
+| "The diff is large but the user just wants the description — a size note would be off-topic." | PR size is reviewability. A 600-line diff reviewed as one unit means reviewers must read everything before judging any part. A split recommendation is part of the description service, not an interruption of it. | Run the size check (Step 0). If > 600 lines and not a mechanical rename/migration, output the split recommendation before proceeding. |
+
+---
+
+## 0. Size check
+
+```bash
+BASE=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null | sed 's|^[^/]*/||' || echo main)
+git diff "$(git merge-base HEAD "$BASE")"...HEAD --shortstat
+```
+
+Count additions + deletions. If the total exceeds **600 lines** and the diff is not a
+mechanical rename or a generated migration file:
+
+1. Output: _"This diff is N lines — large enough that reviewers will likely lose context across sections. Consider splitting before I write the description."_
+2. Suggest the logical split: data model, business logic, test suite, or infrastructure as separate PRs.
+3. Pause and wait for user confirmation before proceeding.
+
+If the user confirms to proceed anyway, note the size in the What Changed section.
 
 ---
 
@@ -59,7 +90,7 @@ Answer these internally before drafting:
 1. What does this PR do? (single sentence)
 2. Why is this change needed?
 3. How was it implemented? (non-obvious decisions only)
-4. What could break?
+4. What could break, and how would you roll it back?
 5. How was it tested?
 6. What should reviewers focus on?
 
@@ -70,30 +101,26 @@ Answer these internally before drafting:
 ### Standard PR (most cases)
 
 ```markdown
-## What
+## Context / Why
 
-[1–3 sentences. What does this PR accomplish?]
+[The problem being solved. Link to issue/ticket if there is one. One paragraph max.
+This section is mandatory — a PR without motivation is unreviewable in context.]
 
-## Why
+## What Changed
 
-[The motivation. What problem does this solve, or what feature does it deliver?
-Link to the issue/ticket if there is one.]
+[Approach taken and non-obvious design decisions. Skip what the diff already shows.]
 
-## How
+## Risk & Rollback
 
-[Notable implementation decisions, tricky areas, or architectural choices.
-Skip if the implementation is obvious from the diff.]
+[What could break. How to revert if it does. "None" is acceptable but must be stated.]
 
-## Testing
+## How to Test
 
-[How was this tested? What test cases cover this?]
+[Reproducible steps a reviewer can follow to verify this works.]
 
-## Checklist
+## Reviewer Focus
 
-- [ ] Tests pass locally
-- [ ] No new lint errors
-- [ ] Docs / comments updated where needed
-- [ ] No hardcoded secrets or environment values
+[Where you want feedback. What you already feel confident about.]
 ```
 
 ### Small / cleanup PR (< ~10 lines, single purpose)
@@ -122,8 +149,7 @@ Prepend before the standard template:
 
 ## 4. Polish
 
-- **What** section over 3 sentences → note the PR may be too large.
-- **Why** is the most important section — reviewers judge the approach from motivation.
+- **Context / Why** is the most important section — reviewers judge the approach from motivation. More than one paragraph suggests the PR scope may be too broad.
 - Branch has a ticket number → add `Closes #123` or Jira link at the bottom.
 - Diff touches migrations, DB schema, or infra → add a **Deployment Notes** section.
 
@@ -132,8 +158,19 @@ Prepend before the standard template:
 ## 5. Output
 
 Present the final description in a single markdown code block ready to paste into
-GitHub / GitLab / Bitbucket. Follow with one offer: "Want me to adjust tone, length,
-or add any sections?"
+GitHub / GitLab / Bitbucket.
+
+Then output the **PR Hygiene Checklist** as a separate block for the author to
+complete before marking Ready for Review:
+
+- [ ] Self-reviewed the diff (ran code-review §A)
+- [ ] No debug code, console.logs, or commented-out blocks
+- [ ] CI is green (or flaky test documented inline)
+- [ ] Commits are clean — no "WIP", "fixup", or "oops" in final history
+- [ ] PR title follows Conventional Commits format
+- [ ] Breaking changes called out in description and commit footer
+
+Follow with one offer: "Want me to adjust tone, length, or add any sections?"
 
 ---
 

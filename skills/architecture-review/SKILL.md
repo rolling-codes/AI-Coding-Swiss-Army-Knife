@@ -19,6 +19,14 @@ the codebase worse to work in. Model: `standard` for a single-module pass, `deep
 for a whole-repo or cross-cutting review (resolve via dev-workflow's
 `model-registry.json` if installed).
 
+## Quick examples
+
+**In:** "is this service well-structured before we scale it?"
+**Out:** coupling/cohesion report by module, 🔴🟡🟢 findings with file:line, fan-out counts, top recommendation
+
+**In:** "should we split this 2000-line module?"
+**Out:** blast-radius analysis + proposed split boundaries with rationale
+
 ## Iron Law
 
 Every finding names a concrete file:line or module — because structural critique

@@ -1,6 +1,6 @@
 {
   "name": "dev-workflow-pack",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Thirteen skills for the whole development lifecycle — writing and de-AI-ing code, review, testing, release, and docs — built through the skill-creator six-gate pipeline, plus hook-enforced branch protection and skill-driven session memory. One Claude Code plugin.",
   "author": {
     "name": "RollingCodes",

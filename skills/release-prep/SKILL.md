@@ -22,6 +22,14 @@ For other stacks (Go, Node, Rust, etc.): check for the canonical version file
 (`go.mod`, `package.json`, `Cargo.toml`) and adapt the drift checks — the
 principles are the same even if the file paths differ.
 
+## Quick examples
+
+**In:** "can I ship this?"
+**Out:** go/no-go checklist — version drift across all sources, changelog verified, tests passing; each item ✅/❌; any ❌ blocks with specific fix instructions
+
+**In:** "about to tag v2.0.0, anything blocking?"
+**Out:** same checklist; verdict: 🟢 Go / 🔴 No-go
+
 ## Iron Law
 
 No "Ready to tag" verdict while any checklist item is failing or unchecked —

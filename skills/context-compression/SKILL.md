@@ -18,6 +18,14 @@ Compaction that happens *to* a session loses whatever wasn't explicitly preserve
 This skill makes the keep/drop decision deliberate instead of leaving it to a
 generic auto-summarizer. Model: `fast`.
 
+## Quick examples
+
+**In:** "context is getting long, we've covered a lot"
+**Out:** keep/drop breakdown — decisions + open questions preserved, exploratory tangents dropped; suggested /compact payload
+
+**In:** "summarize what we've done so far"
+**Out:** structured summary — shipped, in-progress, open decisions, next step
+
 ## Iron Law
 
 Compression is an explicit keep/drop classification with the drops stated —

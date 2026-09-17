@@ -16,6 +16,14 @@ model: haiku
 Produce a commit message following [Conventional Commits](https://www.conventionalcommits.org/).
 Good commit messages are the cheapest form of documentation.
 
+## Quick examples
+
+**In:** "staged and ready, write the commit"
+**Out:** `feat(auth): add PKCE flow for OAuth2 login`
+
+**In:** "what should I name this fix?"
+**Out:** `fix(api): return 404 instead of 500 when user not found`
+
 ## Iron Law
 
 The message is derived from the actual staged diff, never from conversation memory —

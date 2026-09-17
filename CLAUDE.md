@@ -31,7 +31,7 @@ Run this before any release tag and after any change to a skill directory name, 
 13. Every SKILL.md has a `model:` field
 14. Every SKILL.md has an `allowed-tools:` field
 
-It does **not** test skill triggering or hook firing. Behavioral smoke testing requires a live Claude Code session — use `tools/routing-scenarios.md` as the manual test spec (44 scenarios across §A representative, §B ambiguous, and §C adversarial).
+It does **not** test skill triggering or hook firing. Behavioral smoke testing requires a live Claude Code session — use `tools/routing-scenarios.md` as the manual test spec (49 scenarios across §A representative, §B ambiguous, and §C adversarial).
 
 ## Architecture
 
@@ -83,9 +83,33 @@ tools/
 
 **Changelog.** Maintain an `[Unreleased]` section in `CHANGELOG.md` for in-progress changes. Use Keep a Changelog format with conventional types (Fixed, Added, Changed, Removed). Promote to a version section when tagging a release.
 
+## Development workflow
+
+**Edit a skill:**
+1. Find the skill in `skills/<name>/SKILL.md`
+2. Make changes (frontmatter: `name`, `description`, `allowed-tools`, `model`)
+3. Validate: `sh tools/validate-pack.sh`
+4. Test in a live Claude Code session (skills load from disk automatically)
+
+**Modify routing or structure:**
+1. Update skill routing table in `skills/dev-workflow/SKILL.md`
+2. Update `skills/dev-workflow/references/skill-routing.md` if adding pairwise disambiguation
+3. Add/update scenario in `tools/routing-scenarios.md` if it introduces an ambiguous boundary
+4. Run validator and confirm exit 0
+5. Manual smoke-test the new routing in a session
+
+**Edit hooks:**
+- Hook scripts are in `hooks/scripts/` (POSIX sh)
+- Registration is in `hooks/hooks.json` (only PreToolUse active by default)
+- Branch policy config is at `hooks/config/branch-policy.json`
+- Validate syntax: `sh -n hooks/scripts/<script>.sh`
+
+**Check before releasing:**
+- Validator passes: `sh tools/validate-pack.sh` (exit 0)
+- A dated version entry exists in `CHANGELOG.md`; `[Unreleased]` is present but empty (for the next cycle)
+- Version bumped in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
+- Smoke-test routing against `tools/routing-scenarios.md` in a live session
+
 ## Release checklist
 
-1. `sh tools/validate-pack.sh` — exit 0
-2. `[Unreleased]` section in `CHANGELOG.md` is populated and dated
-3. Version bumped consistently in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
-4. Manual smoke-test against `tools/routing-scenarios.md` in a live session
+Same as above. Validator catches structural bugs; smoke-test catches skill-selection logic.

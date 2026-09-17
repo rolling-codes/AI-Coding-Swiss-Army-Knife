@@ -25,6 +25,14 @@ unrouted work silently loses the sibling skill's guardrails.
 by the current task. This file is a router plus a pipeline; the detailed procedures
 live in `references/`, loaded one at a time, only for the task at hand.
 
+## Quick examples
+
+**In:** "implement the user settings feature"
+**Out:** full pipeline — Research → Plan → TDD → Code Review → Commit; each step's deliverable surfaces before the next begins
+
+**In:** "what should I work on next?"
+**Out:** backlog check → if a task is `doing`, propose resuming it (confirm or redirect); if none, suggest top `todo` item and wait for confirmation; else asks what to build
+
 ## Environment Verification
 
 The pipeline and the context rules lean on ECC. Before running the full
@@ -116,6 +124,35 @@ fire, conflict-precedence rules, and the cross-skill handoff contract. Load it
 only when the tables above don't already resolve the task — the common cases
 don't need it.
 
+## Session Start
+
+Before starting pipeline work, check for a project backlog:
+
+```bash
+cat .claude/backlog.md 2>/dev/null
+```
+
+If `.claude/backlog.md` exists:
+1. Show the board summary (counts of todo / doing / done)
+2. If a task is `doing`, resume it — confirm with the user or ask to redirect
+3. If no `doing` task, suggest the top `todo` item and **wait for user confirmation**
+4. Only after confirmation: mark the chosen item `doing` before the first pipeline step
+5. Mark it `done` after Commit completes
+
+If the file doesn't exist, skip silently — the backlog is opt-in. See
+`references/backlog.md` for the file format and update protocol.
+
+Also check for project recipes:
+
+```bash
+cat .claude/recipes.md 2>/dev/null
+```
+
+If `.claude/recipes.md` exists, note the known commands — they take precedence over
+guessing from training data when the user asks to run, build, update, or deploy. If
+it doesn't exist, skip silently. See `references/recipes.md` for the format and the
+research protocol when a command is missing.
+
 ## The Pipeline
 
 ### Size Check (first thing)
@@ -191,6 +228,8 @@ For orchestration work outside the pipeline, resolve the model alias via
 | Issues / project tracking | `fast` | `references/issues.md` |
 | Delegate subtask | task-dependent | `references/sub-agents.md` |
 | Resume session | `fast` | `references/memory.md` (§ Load) |
+| Pick next task / what to work on next | `fast` | `references/backlog.md` (if `.claude/backlog.md` exists) |
+| Run / build / update / deploy the project | `fast` | `references/recipes.md` |
 | End session / context long | `fast` | `references/memory.md` (§ Write) |
 | Detect repo type / stack / conventions | `fast` | `references/repo-detection.md` |
 

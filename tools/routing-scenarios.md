@@ -71,6 +71,18 @@ Legend — **Primary** (must own it) · **Inactive** (must not fire) · **Order*
 - Primary: scope-creep · Inactive: architecture-review, dev-workflow (as implementer)
 - Guard: the addition is classified (Expansion) and the decision is surfaced to the user before any dashboard code is written.
 
+**A14. Known recipe used.** "Update the dependencies." `.claude/recipes.md` exists and contains `| update deps | npm update | from project root |`.
+- Primary: dev-workflow (reads `.claude/recipes.md`, uses `npm update`) · Inactive: no independent rediscovery of the command
+- Guard: agent does not search package.json, README, or Makefile when the recipe is already recorded; it uses the stored command directly.
+
+**A15. Missing recipe — research before acting.** "Run the build." No `.claude/recipes.md` exists.
+- Primary: dev-workflow (follows research protocol in `references/recipes.md`) · sequence: README → Makefile → package.json → CI config → scripts/ → ask user
+- Guard: agent does not execute a guessed command (`npm run build`, `make`, etc.) before completing at least one research step against the project's own files.
+
+**A16. Discovered command persisted.** Build command not in recipes; agent finds `npm run build` in `package.json` scripts.
+- Primary: dev-workflow · Expected: appends `| build | npm run build | |` to `.claude/recipes.md` **before** running the command; existing rows unchanged.
+- Guard: agent does not run the command first and persist later; save-before-run is required by the protocol. Existing entries must survive the append verbatim.
+
 ---
 
 ## B. Ambiguous — boundary tests (the interesting part)
@@ -250,6 +262,34 @@ Legend — **Primary** (must own it) · **Inactive** (must not fire) · **Order*
 - Guard: technically reading the diff while supplementing the description from memory is an Iron Law bypass the Red Flags table does not cover; the table addresses skipping the diff entirely, not reading it and then adding memory on top.
 - Skill(s) involved: commit-message
 - Severity: HIGH
+
+**C26. Size-check enforcement on a large diff.**
+- Scenario: "Write me a PR description for this branch" — but `git diff main..HEAD --shortstat` shows 900 lines changed.
+- Expect: `pr-description` runs Step 0 (size check) first, outputs a split recommendation, and pauses for confirmation before writing any description. The recommendation names at least one logical split point (data model, business logic, or test layer).
+- Guard: the size check fires even when the user frames the request as "just a description" — framing does not override the threshold.
+- Skill(s) involved: pr-description
+- Severity: MEDIUM
+
+**C28. Invented command — no evidence.**
+- Scenario: "Deploy to production." No `.claude/recipes.md` exists. README has no deploy section. No Makefile, no CI workflow, no `scripts/deploy.sh`. `package.json`, `pyproject.toml`, `Cargo.toml`, and `go.mod` are either absent or contain no deploy target.
+- Expect: dev-workflow exhausts the research protocol, finds no command, and asks the user: "I don't see a deploy command in this project — what command should I use?" It does not execute `./scripts/deploy.sh`, `npm run deploy`, `make deploy`, or any other plausible-but-unverified command.
+- Guard: absence of evidence is not permission to invent. Training-data plausibility ("most Node projects use…") does not substitute for project-local evidence.
+- Skill(s) involved: dev-workflow
+- Severity: HIGH
+
+**C29. Second invocation uses persisted recipe.**
+- Scenario: In a prior session the agent discovered `pytest -q` as the test command and appended it to `.claude/recipes.md`. New session: "Run the tests."
+- Expect: dev-workflow reads `.claude/recipes.md` at Session Start, finds `| run tests | pytest -q | requires venv |`, and uses `pytest -q` directly. It does not re-search README, Makefile, or pyproject.toml.
+- Guard: the registry exists specifically to prevent repeated research; re-running the research protocol when the recipe is present defeats the persistence guarantee.
+- Skill(s) involved: dev-workflow
+- Severity: MEDIUM
+
+**C27. Missing Context/Why section caught by code-review.**
+- Scenario: "Code review this PR" — the PR description has What Changed, How to Test, and Reviewer Focus sections but no Context/Why section.
+- Expect: `code-review §A` flags the missing Context/Why as an **Important** issue (not Minor); verdict is NEEDS FIXES. The issue entry names the criterion and explains why the absence of motivation makes the PR unreviewable.
+- Guard: the reviewer does not pass a PR on structural completeness alone when the most decision-critical section is absent.
+- Skill(s) involved: code-review
+- Severity: MEDIUM
 
 ---
 

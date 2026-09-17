@@ -45,8 +45,12 @@ checkout.
 **Plan alignment:** implementation matches the plan; deviations are justified
 improvements, not problematic departures; all planned functionality present.
 
-**Code quality:** separation of concerns, error handling, type safety, DRY
-without premature abstraction, edge cases handled.
+**Code quality:** apply the Code Quality Bar (`skills/dev-workflow/references/pr-standards.md`):
+naming (intent-revealing without a comment), function size (< 50 lines, single
+responsibility), immutability (no in-place mutation), nesting depth (≤ 4 levels,
+early returns), error handling (explicit at every trust boundary), dead code (none),
+magic values (named constants). Each has a concrete pass/fail state — flag failures
+as Minor issues; flag error-handling gaps at trust boundaries as Important.
 
 **Architecture:** sound design decisions, reasonable scalability and
 performance, security concerns, clean integration with surrounding code.
@@ -59,11 +63,18 @@ compatibility, documentation, no obvious bugs.
 
 ## Calibration
 
-Categorize issues by actual severity — not everything is Critical. Acknowledge
-what was done well before listing issues; accurate praise helps the implementer
-trust the rest of the feedback. Flag significant deviations from the plan
-specifically so the implementer can confirm intent. If the problem is in the
+Categorize issues by actual severity — not everything is Critical. Use these
+consistent definitions:
+- **Critical** — data loss risk, security hole, auth bypass, broken core functionality
+- **Important** — logic bug, missing error handling at a trust boundary, broken contract, test gap
+- **Minor** — naming, nesting, dead code, magic values, hygiene
+
+Acknowledge what was done well before listing issues; accurate praise helps the
+implementer trust the rest of the feedback. Flag significant deviations from the
+plan specifically so the implementer can confirm intent. If the problem is in the
 plan itself rather than the implementation, say so.
+
+For code-quality findings, lead with the criterion: `criterion | file:line | why | fix`.
 
 ## Output format
 
