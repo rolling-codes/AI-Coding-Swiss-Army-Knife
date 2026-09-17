@@ -18,6 +18,14 @@ prose that already exists, and answer **watermark** questions. This merges the p
 discipline (formerly `lean-code`) with the detection/humanization catalog (formerly
 `deai`) into one skill with a shared toolchain.
 
+## Quick examples
+
+**In:** "does this function look AI-generated?"
+**Out:** fingerprint audit — over-abstraction flags, naming-pattern tells, complexity budget violations; each flagged with file:line and rated Minor/Important
+
+**In:** "humanize this PR description"
+**Out:** before/after — AI tells removed (filler phrases, symmetrical structure, generic transitions)
+
 ## Iron Law
 
 Never hand back AI-authored content without checking it against the documented

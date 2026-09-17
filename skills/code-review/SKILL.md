@@ -18,6 +18,14 @@ model: sonnet
 Vet completed work before it cascades. Two modes, same goal — catch issues while they're
 cheap to fix.
 
+## Quick examples
+
+**In:** "anything I missed before I push?"
+**Out:** §A — five questions + line-by-line pass, outputs `Verdict: MERGE / NEEDS FIXES / NEEDS DISCUSSION` and a specific findings block
+
+**In:** "get an independent review of this feature before main merge"
+**Out:** §B — code-reviewer agent dispatched with diff + requirements, returns Strengths / Issues (Critical/Important/Minor) / Assessment
+
 ## Iron Law
 
 Every diff gets reviewed before merge, regardless of size or author confidence —
@@ -110,11 +118,21 @@ If the answer is "I'd find out from a user report," add observability before mer
 - Credentials, tokens, or keys in code or comments
 - Permissions checked after the work is already done
 
-### Hygiene
-- Debug prints, `console.log`, `print()`, `Debug.WriteLine()` left in
-- TODO comments added without a ticket
-- Commented-out code (delete it — git history keeps it)
-- Hardcoded values that belong in config
+### Hygiene & Code Quality
+
+Check each criterion from the Code Quality Bar (`references/pr-standards.md`):
+
+| Criterion | Pass | Fail |
+|---|---|---|
+| **Naming** | Intent-revealing without needing a comment | Requires a comment to explain what a name means |
+| **Function size** | < 50 lines; single responsibility | > 50 lines, or does more than one thing |
+| **Immutability** | Returns new objects; no in-place mutation | Mutates caller's data; produces hidden side effects |
+| **Nesting depth** | ≤ 4 levels; early returns used | > 4 levels; happy path buried in conditionals |
+| **Error handling** | Explicit at every trust boundary | Silent swallow; `console.error` only; no fallback |
+| **Dead code** | None | Commented-out blocks, unused variables, unreachable branches |
+| **Magic values** | Named constants for thresholds, delays, limits | Bare numbers or strings with no label |
+
+Classic hygiene flags: debug prints left in, TODO comments without a ticket, hardcoded values that belong in config.
 
 ## A3. Test coverage check
 
@@ -155,10 +173,16 @@ Verdict: MERGE / NEEDS FIXES / NEEDS DISCUSSION
 Logic: ✅  Contracts: ✅  Security: ✅
 ```
 
+Severity levels — use these consistently and when delegating findings to §B:
+
+- **Critical** — data loss risk, security hole, auth bypass, broken core functionality → NEEDS FIXES; never MERGE.
+- **Important** — logic bug, missing error handling at a trust boundary, broken contract, test gap → NEEDS FIXES if ≥ 1.
+- **Minor** — naming, nesting, dead code, magic values → note in output; carry forward as tech debt.
+
 Verdict rules:
-- **NEEDS FIXES** — any logic, contract, or security issue.
-- **NEEDS DISCUSSION** — a design decision that's debatable, not clearly wrong.
-- **MERGE** — hygiene only, or no issues.
+- **NEEDS FIXES** — any Critical or Important issue.
+- **NEEDS DISCUSSION** — Important-level design decision that is debatable, not clearly wrong.
+- **MERGE** — Minor issues only, or no issues. Any Critical → never MERGE.
 
 ## A5. Close
 

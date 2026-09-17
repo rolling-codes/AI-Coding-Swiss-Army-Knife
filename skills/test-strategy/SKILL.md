@@ -18,6 +18,14 @@ Produces tests that would actually catch the next regression, not tests that
 just exercise the happy path for coverage numbers. Model: `standard`; use `fast`
 first to enumerate cases before writing any test code.
 
+## Quick examples
+
+**In:** "write tests for this new auth module"
+**Out:** unit tests per function, edge cases (null user, expired token, concurrent session), regression test scaffold for the current bug
+
+**In:** "what am I missing in my test coverage?"
+**Out:** gap analysis — untested code paths listed with file:line, missing edge cases, suggested test scaffolding for each
+
 ## Iron Law
 
 A regression test counts only after it has failed against the pre-fix code —

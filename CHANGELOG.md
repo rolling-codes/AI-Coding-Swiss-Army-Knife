@@ -5,6 +5,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-09-17
+
+### Added
+- `skills/dev-workflow/references/pr-standards.md`: canonical PR and code quality standards — size limits, required sections, hygiene checklist, code quality table with concrete pass/fail criteria, and severity mapping used consistently across skills.
+- `skills/dev-workflow/references/backlog.md`: opt-in task board convention; dev-workflow reads `.claude/backlog.md` at session start, shows board summary (todo/doing/done), resumes in-progress tasks, and marks items done after Commit.
+- `skills/dev-workflow/references/recipes.md`: opt-in project command registry; dev-workflow consults `.claude/recipes.md` at session start and after any unfamiliar "run/build/update/deploy" request, researches the right command from the project's own files when missing, and saves it before executing.
+- `## Quick examples` blocks in all 13 skill bodies: two concrete in/out pairs per skill showing what each actually returns, placed before the Iron Law for fast orientation.
+- `tools/routing-scenarios.md`: A14–A16 (recipe lookup, missing recipe research, persist discovered command) and C28–C29 (invented command when no project evidence, second invocation uses persisted recipe); total scenario count 49.
+
+### Changed
+- `skills/pr-description/SKILL.md`: Step 0 size check fires on diffs > 600 lines (split recommendation before description); Standard PR template updated to five required sections (Context/Why, What Changed, Risk & Rollback, How to Test, Reviewer Focus); PR hygiene checklist appended to every output; new Red Flag covers skipping the size check.
+- `skills/code-review/SKILL.md`: §A Hygiene pass expanded to a full Code Quality Checklist (7 criteria with concrete pass/fail); explicit severity mapping (Critical/Important/Minor) added; verdict rules tied to severity thresholds.
+- `agents/code-reviewer.md`: Code Quality Bar applied to "Code quality" check; severity definitions made explicit; quality findings use `criterion | file:line | why | fix` format.
+- `tools/routing-scenarios.md`: C26 (size check fires on 900-line diff), C27 (missing Context/Why flagged as Important by code-review).
+- `skills/dev-workflow/SKILL.md`: Session Start now checks `.claude/backlog.md` and `.claude/recipes.md`; Task Router gains two rows (backlog pick, recipe lookup).
+
 ## [2.3.0] - 2026-09-17
 
 ### Fixed

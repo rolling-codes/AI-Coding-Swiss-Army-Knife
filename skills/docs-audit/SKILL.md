@@ -21,6 +21,14 @@ that classification instead of leaving everything to accumulate. Model: `standar
 for a single doc, `deep` if cross-referencing docs against a large or unfamiliar
 codebase.
 
+## Quick examples
+
+**In:** "does the README still match what the code does?"
+**Out:** drift report — stale claims (file:line with suggested fix), dead links, sections missing coverage for new features
+
+**In:** "clean up the docs before tagging"
+**Out:** same; each doc file classified as current / stale / dead with specific corrections and line-number references
+
 ## Iron Law
 
 Every concrete claim is verified against the current code before it's classified —

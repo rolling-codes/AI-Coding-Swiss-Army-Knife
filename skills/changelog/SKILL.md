@@ -16,6 +16,14 @@ Create or update `CHANGELOG.md` following [Keep a Changelog](https://keepachange
 A good changelog is written for humans — it describes what changed and why it matters,
 not what files were touched.
 
+## Quick examples
+
+**In:** "update the changelog for this release"
+**Out:** `## [1.2.0] - 2026-09-17` section from `git log`, grouped by type (Added / Changed / Fixed / Removed)
+
+**In:** "what changed since v1.1.0?"
+**Out:** Keep a Changelog-formatted entry for the git range; empty categories omitted
+
 ## Iron Law
 
 Entries are derived from the actual commit range and written as user-facing impact —

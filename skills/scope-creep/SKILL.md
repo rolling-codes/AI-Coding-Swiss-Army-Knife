@@ -16,6 +16,14 @@ model: haiku
 
 A new feature or change is being requested mid-build. Before acting on it, assess whether this is a natural extension or genuine scope creep that needs a conscious decision.
 
+## Quick examples
+
+**In:** "while we're adding OAuth, let's also add social login" (mid-build)
+**Out:** scope flag — estimated cost (+2d, 3 new deps), risk of expanding now, recommendation: defer to backlog or proceed with explicit decision
+
+**In:** "can we quickly update the profile page too?" (mid-build)
+**Out:** scope flag — original goal vs. new addition, risk assessment, whether this belongs in a separate PR
+
 ## Iron Law
 
 Every mid-build addition gets named and classified before any code is written for it —
