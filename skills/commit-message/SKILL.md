@@ -4,9 +4,11 @@ description: >
   Use this to generate a Conventional Commits-compliant message from staged git
   changes when changes are staged and a message is needed — "write a commit
   message", "help me commit", "what should I commit this as"; NOT for PR
-  descriptions or changelog entries (later lifecycle stages with their own
-  skills), and NOT for deciding what to stage or executing the commit itself
+  descriptions or changelog entries (pr-description / changelog), and NOT for
+  deciding what to stage or executing the commit itself
   (dev-workflow handles git operations).
+allowed-tools: [Bash, Read]
+model: haiku
 ---
 
 # Commit Message Generator
@@ -28,6 +30,7 @@ documents something that didn't happen.
 | "I wrote this code in-session — I know what changed, no need to run `git diff --staged`." | Staged state and session memory diverge constantly: partial stages, untracked files, changes from outside the session. | Run the inspection commands every time. They cost seconds. |
 | "The diff is huge; I'll describe the overall theme instead of reading it." | Large diffs are exactly where mixed concerns hide — and a mixed-concern commit is the one that most needs an honest message or a split. | Orient with `--stat`, sample the diff, and flag multi-concern splits explicitly. |
 | "The type doesn't really matter — feat/fix/chore are close enough here." | Types drive downstream tooling: the changelog skill parses them into release sections. A mislabeled type corrupts release notes later. | Pick the dominant type deliberately; note secondary concerns in the body. |
+| "I read the diff, but I also know from the session that more was changed — I'll include that in the message too." | Supplementing the diff with session memory violates the Iron Law as surely as skipping the diff. The message describes what is staged, not what you remember intending. | Describe only what is staged. If meaningful changes are not staged, tell the user: "Stage the functional changes first." |
 
 ---
 

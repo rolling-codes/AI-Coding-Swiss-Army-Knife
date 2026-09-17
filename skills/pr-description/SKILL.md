@@ -7,6 +7,8 @@ description: >
   "opening a merge request"; NOT for single-commit messages (commit-message),
   NOT for changelog or release notes (changelog / release-prep), and NOT for
   executing the branch, push, or merge operations (dev-workflow).
+allowed-tools: [Bash, Read]
+model: sonnet
 ---
 
 # PR Description Generator

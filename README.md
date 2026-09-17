@@ -2,8 +2,8 @@
 
 Thirteen development-workflow skills rebuilt through the
 [skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
-six-gate pipeline, plus hook-enforced session memory and branch protection. One
-Claude Code plugin.
+six-gate pipeline, plus hook-enforced branch protection and skill-driven session
+memory. One Claude Code plugin.
 
 **v2.0.0:** each skill now carries an explicit Capability + Trigger + Boundary
 description (so skills fire when they should and stay silent when a sibling owns
@@ -16,11 +16,10 @@ thirteen before release.
 
 Skills are instructions Claude can forget. Hooks are guarantees that fire every time.
 
-- **SessionStart** (startup, resume, and after compaction): injects a short digest into context — branch, dirty-file count, the one-paragraph session summary from `.claude/memory.json`, and a pointer to the full files. Claude reads the full files only when the digest is not enough, so the recurring per-session cost is a few lines, not the whole memory.
-- **PreCompact** (manual `/compact` and auto-compaction): snapshots branch, uncommitted-file count, and the last five commits to `.claude/memory-auto.json`, so the post-compaction SessionStart reload has fresh state to hand back.
-- **PreToolUse** (Bash): blocks `git commit` and `git push` while on `main`, `master`, `develop`, `release/*`, or `hotfix/*`, and tells Claude to create a feature branch. Matching is a plain text scan, so a command that merely mentions "git commit" inside a string can false positive; disable per repo in `/hooks` if it gets in the way.
+- **PreToolUse** (Bash) — **active by default.** Blocks `git commit` and `git push` while on `main`, `master`, `develop`, `release/*`, or `hotfix/*`, and tells Claude to create a feature branch. Matching is a plain text scan, so a command that merely mentions "git commit" inside a string can false positive; disable per repo in `/hooks` if it gets in the way.
+- **SessionStart** + **PreCompact** (memory hooks) — **ship, but are not registered by default.** `load-memory.sh` (SessionStart) would inject a short memory digest — branch, dirty-file count, the one-paragraph summary from `.claude/memory.json`, and a pointer to the full files; `save-memory.sh` (PreCompact) would snapshot branch, uncommitted-file count, and the last five commits to `.claude/memory-auto.json`. They are left out of `hooks.json` because session persistence is handled either by the memory skill writing `.claude/memory.json` directly (dev-workflow / context-compression) or by an external tool such as [claude-mem](https://github.com/thedotmack/claude-mem). To turn the digest automation on, register them in `/hooks` (SessionStart → `load-memory.sh`, PreCompact → `save-memory.sh`) — but don't run them alongside claude-mem, or two systems fight over the same session. See `UPGRADE-SLOTS.md`.
 
-Both scripts are plain POSIX sh, depend only on `git`, never block (always exit 0), and stay silent outside a git repo. On Windows they run under Git Bash, which ships with Git for Windows.
+All three scripts are plain POSIX sh, depend only on `git`, never block (always exit 0), and stay silent outside a git repo. On Windows they run under Git Bash, which ships with Git for Windows.
 
 ## Install
 
@@ -48,6 +47,7 @@ Restart Claude Code (or run `/reload-plugins`) after installing — hooks regist
 | Skill | Job |
 |---|---|
 | dev-workflow | Orchestrator: routing, model selection, GitHub ops, memory |
+| ai-hygiene | Prevent/detect/remove AI fingerprints in code and prose; watermarks |
 | commit-message | Conventional Commits from staged changes |
 | pr-description | PR description from branch diff and history |
 | changelog | Keep a Changelog entries from git history |
@@ -67,10 +67,12 @@ structure respectively). See the disambiguation table in
 
 ## Validating the pack itself
 
-`tools/validate-pack.sh` is a static consistency check for this repo — it
-catches a skill added without a routing-table entry, malformed JSON config,
-broken hook script syntax, or a hooks.json pointing at a script that doesn't
-exist. Run it before tagging a release of the pack:
+`tools/validate-pack.sh` is a static consistency check for this repo. It catches
+a skill added without a routing-table entry (or a router arrow pointing at a
+skill that doesn't exist), a skill missing from the README table, a SKILL.md with
+no `description:`, an agent whose frontmatter name doesn't match its filename,
+malformed JSON config, broken hook script syntax, or a hooks.json pointing at a
+script that doesn't exist. Run it before tagging a release of the pack:
 
 ```bash
 sh tools/validate-pack.sh
@@ -78,13 +80,14 @@ sh tools/validate-pack.sh
 
 This is a static check only. It does not trigger skills or fire hooks inside
 an actual Claude Code session — passing it means the files are internally
-consistent, not that the pack has been exercised end to end. Smoke-test any
-new or changed skill in a real session before shipping.
+consistent, not that the pack has been exercised end to end. For skill *selection*
+(which skill fires, which stay silent, ordering, and the shortcuts to refuse),
+smoke-test against `tools/routing-scenarios.md` in a real session before shipping.
 
 ## Memory files
 
-- `.claude/memory.json` — narrative state (conventions, decisions, open work, session summary). Written by the dev-workflow skill. Keep it under 60 lines; the load hook truncates beyond that.
-- `.claude/memory-auto.json` — mechanical snapshot. Owned by the PreCompact hook; never hand-edit.
+- `.claude/memory.json` — narrative state (conventions, decisions, open work, session summary). Written by the dev-workflow and context-compression skills. Keep it under ~60 lines; if you enable the SessionStart memory hook it emits only a digest, not the whole file.
+- `.claude/memory-auto.json` — mechanical snapshot. Written by the PreCompact memory hook *when that hook is enabled* (off by default); never hand-edit.
 
 Commit both for team-shared memory, or add `.claude/memory*.json` to `.gitignore` to keep memory local.
 

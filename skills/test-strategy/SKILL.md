@@ -8,6 +8,8 @@ description: >
   done; NOT for enforcing test-first ordering during active development
   (dev-workflow's TDD step), NOT for fixing the bug itself (dev-workflow),
   and NOT for review verdicts on a diff (code-review).
+allowed-tools: [Read, Grep, Glob, Bash]
+model: sonnet
 ---
 
 # Test Strategy Skill
@@ -84,6 +86,18 @@ step produces tests that mirror the implementation instead of the specification.
 - Name tests by behavior, not by method: `rejects_negative_quantity`, not `test3`
 - For the regression test from Step 1: run it against the pre-fix code first to
   confirm it actually fails, then confirm it passes post-fix
+
+```bash
+# Verify the regression test actually catches the bug:
+git stash                              # stash the fix (or: git checkout <pre-fix-ref>)
+npx jest path/to/regression.test.ts   # must FAIL here — proves the test detects the bug
+git stash pop                          # restore the fix
+npx jest path/to/regression.test.ts   # must PASS here — proves the fix works
+```
+
+A regression test that has never failed is unproven. If no pre-fix state is
+available (e.g. fix was already committed), check out the commit before the fix:
+`git checkout <pre-fix-sha> -- <files>`, run the test, then restore.
 
 ```bash
 npx jest --findRelatedTests src/auth.ts   # or the repo's equivalent

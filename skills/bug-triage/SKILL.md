@@ -7,6 +7,8 @@ description: >
   "consolidate findings", or a dump of multiple reports or review-agent
   output; NOT for fixing the bugs (dev-workflow), NOT for reviewing a diff to
   find new issues (code-review), and NOT for a single already-identified bug.
+allowed-tools: [Read, Grep, Glob]
+model: sonnet
 ---
 
 # Bug Triage

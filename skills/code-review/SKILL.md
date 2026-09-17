@@ -9,6 +9,8 @@ description: >
   (dev-workflow's code-review-routing reference), NOT for structural/coupling
   health (architecture-review), and NOT for ranking piles of existing findings
   (bug-triage).
+allowed-tools: [Read, Grep, Glob, Bash, Agent]
+model: sonnet
 ---
 
 # Code Review

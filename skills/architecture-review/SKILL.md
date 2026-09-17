@@ -8,6 +8,8 @@ description: >
   or before a v-next / major-refactor decision; NOT for line-by-line diff
   review (code-review), NOT for documentation drift (docs-audit), and NOT
   for session context management (context-compression).
+allowed-tools: [Read, Grep, Glob, Bash]
+model: sonnet
 ---
 
 # Architecture Review Skill
@@ -88,6 +90,11 @@ toward volatile concrete detail?
 ---
 
 ## Step 3: Report
+
+**Severity rubric for findings:**
+- 🔴 Block / fix before proceeding — structural risk that compounds on every future change (e.g. a layering violation in the hot path, a dependency inversion that forces the stable module to import the volatile one).
+- 🟡 Fix before the next major version — a coupling or cohesion issue that is manageable now but will cost more each month it is deferred.
+- 🟢 Nice-to-have — a minor improvement with no compounding effect; defer freely.
 
 ```
 ## Architecture Review: [scope]

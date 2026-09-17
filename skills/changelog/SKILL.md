@@ -6,6 +6,8 @@ description: >
   changelog", "release notes", "what changed since last release"; NOT for
   single commit messages (commit-message), NOT for PR bodies (pr-description),
   and NOT for the full pre-tag validation pass (release-prep).
+allowed-tools: [Bash, Read, Edit, Write]
+model: sonnet
 ---
 
 # Changelog Generator
