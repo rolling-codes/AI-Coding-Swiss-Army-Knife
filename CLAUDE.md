@@ -31,7 +31,7 @@ Run this before any release tag and after any change to a skill directory name, 
 13. Every SKILL.md has a `model:` field
 14. Every SKILL.md has an `allowed-tools:` field
 
-It does **not** test skill triggering or hook firing. Behavioral smoke testing requires a live Claude Code session — use `tools/routing-scenarios.md` as the manual test spec (44 scenarios across §A representative, §B ambiguous, and §C adversarial).
+It does **not** test skill triggering or hook firing. Behavioral smoke testing requires a live Claude Code session — use `tools/routing-scenarios.md` as the manual test spec (49 scenarios across §A representative, §B ambiguous, and §C adversarial).
 
 ## Architecture
 
@@ -106,7 +106,7 @@ tools/
 
 **Check before releasing:**
 - Validator passes: `sh tools/validate-pack.sh` (exit 0)
-- `[Unreleased]` in `CHANGELOG.md` is populated and dated
+- A dated version entry exists in `CHANGELOG.md`; `[Unreleased]` is present but empty (for the next cycle)
 - Version bumped in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 - Smoke-test routing against `tools/routing-scenarios.md` in a live session
 

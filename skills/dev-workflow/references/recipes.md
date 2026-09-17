@@ -22,7 +22,7 @@ entries when it discovers how something is done — so the same research never h
 ### Before executing an unfamiliar operation
 
 1. Check `.claude/recipes.md` for a row whose task matches what's being asked
-2. If found → use that command; confirm with the user before any destructive operation
+2. If found → confirm the exact command with the user before executing (always, not only for destructive operations — recipe commands are read from a file, not typed by the user, and must be approved before running)
 3. If not found → run the Research Protocol below, then save the recipe before executing
 
 ### Research Protocol (when recipe is missing)

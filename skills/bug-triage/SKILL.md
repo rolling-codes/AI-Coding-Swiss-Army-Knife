@@ -19,7 +19,7 @@ maintainer can act on without wading through noise.
 ## Quick examples
 
 **In:** paste of three code-reviewer outputs with overlapping findings
-**Out:** deduplicated ranked report — Critical first, then Important, then Minor; estimated blast radius per issue; fix-in-order recommendation
+**Out:** deduplicated ranked report — Critical first, then High, then Medium, then Low; estimated blast radius per issue; fix-in-order recommendation
 
 **In:** "which of these 15 bugs should I fix first?"
 **Out:** same; top 3 with severity rationale, remainder as carry-forward

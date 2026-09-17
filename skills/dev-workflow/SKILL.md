@@ -31,7 +31,7 @@ live in `references/`, loaded one at a time, only for the task at hand.
 **Out:** full pipeline — Research → Plan → TDD → Code Review → Commit; each step's deliverable surfaces before the next begins
 
 **In:** "what should I work on next?"
-**Out:** backlog check (reads `.claude/backlog.md` if it exists) → board summary → suggests next todo item; else asks what to build
+**Out:** backlog check → if a task is `doing`, propose resuming it (confirm or redirect); if none, suggest top `todo` item and wait for confirmation; else asks what to build
 
 ## Environment Verification
 
@@ -135,8 +135,8 @@ cat .claude/backlog.md 2>/dev/null
 If `.claude/backlog.md` exists:
 1. Show the board summary (counts of todo / doing / done)
 2. If a task is `doing`, resume it — confirm with the user or ask to redirect
-3. If no `doing` task, suggest the top `todo` item
-4. Mark the chosen item `doing` before the first pipeline step
+3. If no `doing` task, suggest the top `todo` item and **wait for user confirmation**
+4. Only after confirmation: mark the chosen item `doing` before the first pipeline step
 5. Mark it `done` after Commit completes
 
 If the file doesn't exist, skip silently — the backlog is opt-in. See
