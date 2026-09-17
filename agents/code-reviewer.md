@@ -45,7 +45,7 @@ checkout.
 **Plan alignment:** implementation matches the plan; deviations are justified
 improvements, not problematic departures; all planned functionality present.
 
-**Code quality:** apply the Code Quality Bar (`references/pr-standards.md`):
+**Code quality:** apply the Code Quality Bar (`skills/dev-workflow/references/pr-standards.md`):
 naming (intent-revealing without a comment), function size (< 50 lines, single
 responsibility), immutability (no in-place mutation), nesting depth (≤ 4 levels,
 early returns), error handling (explicit at every trust boundary), dead code (none),

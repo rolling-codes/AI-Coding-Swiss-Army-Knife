@@ -50,7 +50,8 @@ reveal motivation, probe `git log` commit messages before concluding it is obvio
 ## 0. Size check
 
 ```bash
-git diff main..HEAD --shortstat
+BASE=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null | sed 's|^[^/]*/||' || echo main)
+git diff "$(git merge-base HEAD "$BASE")"...HEAD --shortstat
 ```
 
 Count additions + deletions. If the total exceeds **600 lines** and the diff is not a

@@ -67,8 +67,9 @@ Read the diff the way a sceptical colleague would — not the way you wrote it.
 ## A0. Get the diff
 
 ```bash
-git diff main..HEAD --stat    # orient first
-git diff main..HEAD           # full diff
+BASE=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null | sed 's|^[^/]*/||' || echo main)
+git diff "$(git merge-base HEAD "$BASE")"...HEAD --stat   # orient first
+git diff "$(git merge-base HEAD "$BASE")"...HEAD          # full diff
 ```
 
 If the diff touches more than ~400 lines or ~8 files, consider splitting into smaller PRs.
@@ -81,6 +82,11 @@ Work through these for the diff as a whole, not line by line.
 Re-read the PR description or commit message. Check that the diff matches the stated
 intent — no more, no less. Stray changes (reformatted unrelated code, debug prints,
 commented-out blocks) should be cleaned up.
+
+**PR description check:** if a PR body exists, verify it contains all five required
+sections (definitions in `skills/dev-workflow/references/pr-standards.md`):
+- Missing **Context/Why** → **Important** (motivation absent; the PR is unreviewable without it)
+- Missing any other required section (What Changed, Risk & Rollback, How to Test, Reviewer Focus) → Minor
 
 **2. What's the worst-case input or state this code can receive?**
 For every new function or branch: what happens with null/None/empty, zero, a very large
@@ -120,7 +126,7 @@ If the answer is "I'd find out from a user report," add observability before mer
 
 ### Hygiene & Code Quality
 
-Check each criterion from the Code Quality Bar (`references/pr-standards.md`):
+Check each criterion from the Code Quality Bar (`skills/dev-workflow/references/pr-standards.md`):
 
 | Criterion | Pass | Fail |
 |---|---|---|
