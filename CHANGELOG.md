@@ -5,6 +5,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+## [2.4.1] - 2026-10-04
+
+### Fixed
+
+- `skills/pr-description/SKILL.md`: three behavioral fixes to `What Changed` and gather-context:
+  1. `What Changed` template now requires a concrete illustration per significant change (before/after snippet, quoted excerpt, or representative example); counter-examples show "Updated diff range" vs the actual before/after command.
+  2. New Red Flag: "I listed all the changes with bullet points" — naming a change is not describing it; it produces a diff index, not a PR description.
+  3. Step 1 gather-context command updated from `git diff main..HEAD` to the three-dot merge-base range, consistent with Step 0.
+
 ## [2.4.0] - 2026-09-17
 
 ### Added
