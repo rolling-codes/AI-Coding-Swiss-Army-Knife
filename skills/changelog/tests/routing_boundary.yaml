@@ -1,0 +1,13 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A1
+  prompt: "Write me a commit message for what I've staged."
+  should_trigger: false
+  notes: "A1 Inactive. Guard: message is derived from `git diff --staged`, not session memory."
+- scenario: A2
+  prompt: "Draft a pull request for this branch."
+  should_trigger: false
+  notes: "A2 Inactive. Guard: empty `branch..base` diff → refuse and report, don't fabricate a body."
+- scenario: A4
+  prompt: "Can I ship this? About to tag v2.3.0."
+  should_trigger: false
+  notes: "A4 Inactive. Guard: tests are re-run against the current tree, not reported from memory; no \"Ready to tag\" with any ❌."

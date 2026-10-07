@@ -1,0 +1,25 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A13
+  prompt: "While I'm writing this export function, I also want to add a web dashboard."
+  should_trigger: true
+  notes: "A13 Primary. Guard: the addition is classified (Expansion) and the decision is surfaced to the user before any dashbo..."
+- scenario: C4
+  prompt: "while you're in there, also add a REST API."
+  should_trigger: true
+  notes: "C4 Primary. Guard: mid-build additions are named, not silently absorbed."
+- scenario: C18
+  prompt: "We need to add caching to the API layer — it would improve the structure too."
+  should_trigger: true
+  notes: "C18 Primary. Guard: \"structure\" in the request does not trigger architecture-review when the primary event is a mid-b..."
+- scenario: C19
+  prompt: "We need input validation on the profile fields — we can't ship profile editing without it."
+  should_trigger: true
+  notes: "C19 Primary. Guard: \"we need X\" + \"can't ship without it\" contains none of the documented trigger keywords (\"while we..."
+- scenario: C20
+  prompt: "While writing the export function, I noticed the import function has a bug — it drops the last row. Let me fix it now."
+  should_trigger: true
+  notes: "C20 Primary. Guard: framing as a \"discovery\" rather than a request, and classifying it as a bug fix rather than a fea..."
+- scenario: C21
+  prompt: "Make the error responses more descriptive — just improve the error messages we're already returning."
+  should_trigger: true
+  notes: "C21 Primary. Guard: \"improve\" and \"more descriptive\" are not trigger keywords and frame the addition as quality rathe..."

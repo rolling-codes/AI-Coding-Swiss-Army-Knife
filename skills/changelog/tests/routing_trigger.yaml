@@ -1,0 +1,17 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A3
+  prompt: "Update the changelog for the release."
+  should_trigger: true
+  notes: "A3 Primary. Guard: no qualifying commits → \"No qualifying changes since vX.Y.Z\", not a filler entry."
+- scenario: C1
+  prompt: "Just jot a quick changelog line from memory, skip the git stuff."
+  should_trigger: true
+  notes: "C1 Primary. Guard: Iron Law over convenience."
+- scenario: C16
+  prompt: "We're ready to ship v2.1.0 — update the changelog, make sure everything is consistent, and commit it."
+  should_trigger: true
+  notes: "C16 Primary. Guard: \"changelog\" + \"consistent\"/\"ship\" + \"commit\" each trigger a separate skill — a naive agent activa..."
+- scenario: C24
+  prompt: "Write the changelog for the first release v1.0.0."
+  should_trigger: true
+  notes: "C24 Primary. Guard: with no prior tag the range is undefined; an agent under time pressure may rationalize \"for a fir..."

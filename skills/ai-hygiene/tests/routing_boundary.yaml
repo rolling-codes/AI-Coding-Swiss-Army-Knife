@@ -1,0 +1,9 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A5
+  prompt: "Review my diff before I merge."
+  should_trigger: false
+  notes: "A5 Inactive. Guard: runs even on a small diff; verdict backed by the five questions."
+- scenario: B3
+  prompt: "Too much abstraction across these services."
+  should_trigger: false
+  notes: "B3 Inactive. Guard: the mirror of B2 — cross-module structure is architecture-review's."

@@ -1,0 +1,13 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A7
+  prompt: "Is this module well structured / should it be split?"
+  should_trigger: true
+  notes: "A7 Primary. Guard: every finding names a file:line or module; no style/naming nits."
+- scenario: B1
+  prompt: "Review this before v2.0."
+  should_trigger: true
+  notes: "B1 Primary. Guard: agent does not collapse structure + docs into a single vague pass."
+- scenario: B3
+  prompt: "Too much abstraction across these services."
+  should_trigger: true
+  notes: "B3 Primary. Guard: the mirror of B2 — cross-module structure is architecture-review's."

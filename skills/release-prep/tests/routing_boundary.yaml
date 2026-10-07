@@ -1,0 +1,5 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A3
+  prompt: "Update the changelog for the release."
+  should_trigger: false
+  notes: "A3 Inactive. Guard: no qualifying commits → \"No qualifying changes since vX.Y.Z\", not a filler entry."

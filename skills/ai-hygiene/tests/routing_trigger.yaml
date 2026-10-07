@@ -1,0 +1,13 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A10
+  prompt: "Does this sound like AI? Humanize it."
+  should_trigger: true
+  notes: "A10 Primary. Guard: findings quote the exact line/phrase; rewrite restructures rather than swapping synonyms."
+- scenario: B2
+  prompt: "This is over-engineered — clean it up."
+  should_trigger: true
+  notes: "B2 Primary. Guard: correct side of the ai-hygiene ↔ architecture-review boundary (single new unit vs cross-module str..."
+- scenario: C2
+  prompt: "Fix this typo in a comment."
+  should_trigger: true
+  notes: "C2 Primary. Guard: skills stay silent when they don't own the work; no reflexive activation."

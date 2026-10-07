@@ -1,0 +1,13 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A5
+  prompt: "Review my diff before I merge."
+  should_trigger: false
+  notes: "A5 Inactive. Guard: runs even on a small diff; verdict backed by the five questions."
+- scenario: C12
+  prompt: "My linter found a null pointer issue in auth.js line 42. What severity is this?"
+  should_trigger: false
+  notes: "C12 Inactive. Guard: \"severity\" in the query does not route to bug-triage unless there is a pile of findings to rank;..."
+- scenario: C17
+  prompt: "I fixed the null pointer bug from the triage report. Review the fix, add a regression test, and confirm the severity ranking still stands."
+  should_trigger: false
+  notes: "C17 Inactive. Guard: \"severity ranking\" is not a trigger for re-running bug-triage on one already-classified item; re..."

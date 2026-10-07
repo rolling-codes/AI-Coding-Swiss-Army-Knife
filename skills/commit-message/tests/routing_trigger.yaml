@@ -1,0 +1,17 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A1
+  prompt: "Write me a commit message for what I've staged."
+  should_trigger: true
+  notes: "A1 Primary. Guard: message is derived from `git diff --staged`, not session memory."
+- scenario: C10
+  prompt: "Write me a message for this."
+  should_trigger: true
+  notes: "C10 Primary. Guard: \"message\" without \"PR\" or \"pull request\" does not trigger pr-description; triggering both wastes ..."
+- scenario: C16
+  prompt: "We're ready to ship v2.1.0 — update the changelog, make sure everything is consistent, and commit it."
+  should_trigger: true
+  notes: "C16 Primary. Guard: \"changelog\" + \"consistent\"/\"ship\" + \"commit\" each trigger a separate skill — a naive agent activa..."
+- scenario: C25
+  prompt: "refactor: clean up whitespace — also restructures auth flow per session plan."
+  should_trigger: true
+  notes: "C25 Primary. Guard: technically reading the diff while supplementing the description from memory is an Iron Law bypas..."

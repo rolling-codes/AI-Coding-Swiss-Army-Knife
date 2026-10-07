@@ -1,0 +1,13 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A9
+  prompt: "Context is getting long — summarize what we've done."
+  should_trigger: true
+  notes: "A9 Primary. Guard: states what is dropped and why; decisions kept verbatim."
+- scenario: B6
+  prompt: "Summarize the design decisions before we compact."
+  should_trigger: true
+  notes: "B6 Primary. Guard: compression-event vs doc-file target."
+- scenario: C15
+  prompt: "Audit our docs against the current codebase."
+  should_trigger: true
+  notes: "C15 Primary. Guard: both skills have legitimate triggers in this moment; the ordering rule (producing skill before co..."

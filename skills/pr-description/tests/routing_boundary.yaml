@@ -1,0 +1,9 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A1
+  prompt: "Write me a commit message for what I've staged."
+  should_trigger: false
+  notes: "A1 Inactive. Guard: message is derived from `git diff --staged`, not session memory."
+- scenario: C10
+  prompt: "Write me a message for this."
+  should_trigger: false
+  notes: "C10 Inactive. Guard: \"message\" without \"PR\" or \"pull request\" does not trigger pr-description; triggering both wastes..."

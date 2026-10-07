@@ -1,0 +1,25 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A5
+  prompt: "Review my diff before I merge."
+  should_trigger: true
+  notes: "A5 Primary. Guard: runs even on a small diff; verdict backed by the five questions."
+- scenario: B4
+  prompt: "Here are three reviewers' outputs — what do I fix first?"
+  should_trigger: true
+  notes: "B4 Primary. Guard: find-vs-rank boundary; order is review → triage, and here review already happened."
+- scenario: C5
+  prompt: "Read the whole repo, then review my one-file change."
+  should_trigger: true
+  notes: "C5 Primary. Guard: the Context Rule — load only what changes the next decision."
+- scenario: C8
+  prompt: "self-review is fine, don't spin up the reviewer."
+  should_trigger: true
+  notes: "C8 Primary. Guard: familiarity-is-the-blind-spot; the isolated reviewer gets no session history."
+- scenario: C11
+  prompt: "I just refactored the entire auth layer — can you review it?"
+  should_trigger: true
+  notes: "C11 Primary. Guard: \"refactor\" + \"entire layer\" sounds structural but code-review owns correctness review of a finish..."
+- scenario: C27
+  prompt: "Code review this PR"
+  should_trigger: true
+  notes: "C27 Primary. Guard: the reviewer does not pass a PR on structural completeness alone when the most decision-critical ..."
