@@ -1,16 +1,21 @@
 # Dev Workflow Pack
 
-Twenty development-workflow skills rebuilt through the
+Twenty development-workflow skills where each skill knows exactly when to fire
+and — just as importantly — when to stay silent. Built through the
 [skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
-six-gate pipeline, plus hook-enforced branch protection and skill-driven session
-memory. One Claude Code plugin.
+six-gate pipeline with machine-executable routing tests, hook-enforced branch
+and destructive-command protection, and context discipline baked into every step.
+One Claude Code plugin.
 
-**v2.0.0:** each skill now carries an explicit Capability + Trigger + Boundary
-description (so skills fire when they should and stay silent when a sibling owns
-the task), an Iron Law stating its one non-negotiable rule as "X because Y"
-reasoning, and a Red Flags table of agent-introspected rationalizations paired
-with the correct behavior. Pairwise description overlap was checked across all
-thirteen before release.
+The central design problem this solves: skills are instructions Claude can
+rationalize around. This pack treats that as an engineering problem, not a
+prompting problem. Every skill carries an explicit Capability + Trigger +
+Boundary description so it fires when it should and stays silent when a sibling
+owns the task. Every routing decision has a machine-testable form — the 29
+routing scenarios in `tools/routing-scenarios.md` compile to per-skill YAML
+test suites and run against real Claude sessions via `tools/eval-routing.sh`.
+And every skip or shortcut a model might attempt is named in each skill's Red
+Flags table with the correct behavior alongside it.
 
 ## What the hooks do
 
