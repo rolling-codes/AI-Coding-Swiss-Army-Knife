@@ -5,6 +5,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-10-07
+
+### Added
+
+- **`performance-audit` skill** (Sonnet): maps hot paths (API handlers, jobs, batch loops), greps for N+1 patterns, recommends the right profiler per language (pprof/Go, pytest-benchmark/Python, node --prof/Node, cargo-flamegraph/Rust), classifies findings Critical (>10×), High (2–10×), Medium (<2×), Low. Closes the explicit orphan gap from observability-audit's NOT FOR clause.
+- **`infra-review` skill** (Sonnet): type-specific IaC checklists for Dockerfile (image pinning, non-root user, secrets in ENV/ARG), Kubernetes (resource limits, probes, RBAC), Terraform (remote state, destroy protection, hardcoded credentials), and CI/CD (unpinned action versions, pull_request_target risk, hardcoded secrets). Each check carries a severity and fix direction.
+- **`refactor-guide` skill** (Sonnet): classifies refactor scope (local vs structural vs migration), runs a pre-flight kill-test pass, greps blast radius (imports, calls, type references), produces an incremental checkpoint plan where each checkpoint is independently committable and has a named rollback point, and surfaces test coverage gaps before the first checkpoint begins.
+
+### Changed
+
+- `observability-audit` NOT FOR clause now explicitly names `performance-audit` as the owner of performance profiling (previously unnamed, leaving the task unowned).
+- `dev-workflow` routing table, `skill-routing.md` CTB table, and README updated with entries for all three new skills.
+- `plugin.json` description updated; skill count updated to "Twenty" in README.
+
 ## [2.5.0] - 2026-10-07
 
 ### Added

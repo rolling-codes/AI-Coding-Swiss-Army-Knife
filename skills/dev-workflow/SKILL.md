@@ -97,6 +97,9 @@ each sibling carries guardrails this skill does not duplicate:
 | Check for outdated, deprecated, or license-problematic packages | → **dependency-check** |
 | Audit logging, tracing, and error-handling coverage | → **observability-audit** |
 | Pre-build go/no-go gate — is this worth implementing? | → **kill-test** |
+| Find performance bottlenecks, profile, map hot paths | → **performance-audit** |
+| Review Dockerfile, K8s, Terraform, or CI/CD files | → **infra-review** |
+| Plan a multi-file or framework-migration refactor safely | → **refactor-guide** |
 
 **Disambiguating the three "assess and prune" skills** — the target of the audit
 is the disambiguator:

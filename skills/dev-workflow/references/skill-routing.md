@@ -76,6 +76,9 @@ one primary and zero or one supporting skill.
 | dependency-check | Outdated / deprecated / license-problematic packages | "are deps up to date", "outdated packages", "license compliance" | CVE scanning (→ security-audit); upgrading packages (→ dev-workflow) |
 | observability-audit | Logging, tracing, metrics, error-handling coverage gaps | "do we have enough logging", "alerting gaps", "check error handling" | Adding log statements (→ dev-workflow); performance profiling; testing error paths |
 | kill-test | Pre-build go/no-go: exists? stdlib? scope clear? conflicts? maintainable? | "should I build this", "kill test this", "go/no-go on this feature" | Reviewing finished code (→ code-review); release validation (→ release-prep) |
+| performance-audit | Profile hot paths, map bottlenecks, recommend profiler, classify findings | "why is this slow", "profile this", "benchmark before/after", "hot path" | Writing optimization code (→ dev-workflow); benchmark test cases (→ test-strategy); logging gaps (→ observability-audit) |
+| infra-review | Review Dockerfile, K8s manifests, Terraform, CI/CD for IaC-specific concerns | "review this Dockerfile", "is this k8s config safe", "audit the CI workflow" | App code correctness (→ code-review); CVE scanning (→ security-audit); system architecture (→ architecture-review) |
+| refactor-guide | Plan multi-file or migration refactors with blast-radius map and checkpoints | "migrate from X to Y", "break up this monolith", "extract this service" | Local 1–3 file refactors (→ dev-workflow); reviewing finished diff (→ code-review) |
 
 Every pair not listed in §5 has non-overlapping triggers — the table above
 resolves them directly.

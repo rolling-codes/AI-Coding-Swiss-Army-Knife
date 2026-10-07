@@ -5,8 +5,8 @@ description: >
   codebase — "do we have enough logging", "add observability", "check our
   error handling coverage", "are we tracing this", "alerting gaps", "what
   would we miss if this broke in prod"; NOT for adding new log statements
-  (dev-workflow), NOT for performance profiling, and NOT for testing error
-  paths (test-strategy).
+  (dev-workflow), NOT for performance profiling (performance-audit), and
+  NOT for testing error paths (test-strategy).
 allowed-tools: [Grep, Read, Glob]
 model: sonnet
 ---

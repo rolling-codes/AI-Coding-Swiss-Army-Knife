@@ -1,6 +1,6 @@
 # Dev Workflow Pack
 
-Seventeen development-workflow skills rebuilt through the
+Twenty development-workflow skills rebuilt through the
 [skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
 six-gate pipeline, plus hook-enforced branch protection and skill-driven session
 memory. One Claude Code plugin.
@@ -63,6 +63,9 @@ Restart Claude Code (or run `/reload-plugins`) after installing — hooks regist
 | dependency-check | Outdated, deprecated, and license-problematic package detection |
 | observability-audit | Logging, tracing, and error-handling coverage gaps |
 | kill-test | Pre-build go/no-go gate: 5-question check before implementing |
+| performance-audit | Performance bottleneck mapping, hot-path analysis, profiler recommendation |
+| infra-review | Dockerfile, Kubernetes, Terraform, and CI/CD IaC review |
+| refactor-guide | Blast-radius mapping and checkpoint planning for structural refactors |
 
 context-compression, docs-audit, and architecture-review sound similar —
 they audit three different targets (session memory, doc files, source

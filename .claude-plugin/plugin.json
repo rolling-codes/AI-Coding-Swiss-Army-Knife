@@ -1,7 +1,7 @@
 {
   "name": "dev-workflow-pack",
-  "version": "2.5.0",
-  "description": "Seventeen skills for the whole development lifecycle — writing, reviewing, testing, securing, observing, and releasing — built through the skill-creator six-gate pipeline, plus hook-enforced branch and destructive-command protection. One Claude Code plugin.",
+  "version": "2.6.0",
+  "description": "Twenty skills for the whole development lifecycle — writing, reviewing, testing, securing, profiling, refactoring, and releasing — built through the skill-creator six-gate pipeline, plus hook-enforced branch and destructive-command protection. One Claude Code plugin.",
   "author": {
     "name": "RollingCodes",
     "url": "https://github.com/rolling-codes"
