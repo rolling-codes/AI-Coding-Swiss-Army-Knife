@@ -5,6 +5,18 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-10-07
+
+### Added
+
+- **`tools/gen-routing-tests.py`**: parses `tools/routing-scenarios.md` and generates per-skill routing test YAML files — `routing_trigger.yaml` (prompts where the skill is Primary) and `routing_boundary.yaml` (prompts where it is Inactive and must not fire). Idempotent; re-run after any change to routing-scenarios.md. Covers 25 files across 13 skills from the 29 existing scenarios; warns on unparseable cases.
+- **`tools/eval-routing.sh`**: meta-runner that invokes `bsc.py eval` for every skill that has routing test files and prints a routing accuracy table (`PASS skill-name` / `FAIL skill-name`). Exits non-zero if any skill fails, making it CI-ready. Dry-run by default; pass `--live` to call real Claude sessions. `BSC_SCRIPT` and `BSC_PYTHON` env vars control the bsc.py path.
+- **Per-skill routing test files** in `skills/*/tests/`: 25 YAML files generated from routing-scenarios.md by the new generator script. The existing `should_trigger.yaml` / `should_not_trigger.yaml` / `expected_behavior.yaml` files in `dev-workflow/tests/` are unchanged and continue to function.
+
+### Changed
+
+- `tools/validate-pack.sh` gained **check 15**: every skill named as `Primary:` in routing-scenarios.md must have a `skills/<skill>/tests/routing_trigger.yaml` — ensures the generator is re-run when a scenario adds a new Primary skill. Pack is at 15 static checks.
+
 ## [2.6.0] - 2026-10-07
 
 ### Added

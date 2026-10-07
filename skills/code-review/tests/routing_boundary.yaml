@@ -1,0 +1,21 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A6
+  prompt: "Write tests for this function / what edge cases am I missing?"
+  should_trigger: false
+  notes: "A6 Inactive. Guard: cases enumerated in prose before test code; a regression test is proven to fail pre-fix."
+- scenario: A7
+  prompt: "Is this module well structured / should it be split?"
+  should_trigger: false
+  notes: "A7 Inactive. Guard: every finding names a file:line or module; no style/naming nits."
+- scenario: A10
+  prompt: "Does this sound like AI? Humanize it."
+  should_trigger: false
+  notes: "A10 Inactive. Guard: findings quote the exact line/phrase; rewrite restructures rather than swapping synonyms."
+- scenario: A12
+  prompt: "Here are findings from SonarQube, the code review, and manual testing — what do I fix first?"
+  should_trigger: false
+  notes: "A12 Inactive. Guard: triage ranks the existing pile; it does not find new bugs or re-run the review."
+- scenario: B4
+  prompt: "Here are three reviewers' outputs — what do I fix first?"
+  should_trigger: false
+  notes: "B4 Inactive. Guard: find-vs-rank boundary; order is review → triage, and here review already happened."

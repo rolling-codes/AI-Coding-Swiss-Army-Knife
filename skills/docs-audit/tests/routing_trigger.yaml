@@ -1,0 +1,25 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A8
+  prompt: "Are the docs still accurate?"
+  should_trigger: true
+  notes: "A8 Primary. Guard: each claim checked by grep against source, not judged by how confident the prose reads."
+- scenario: B1
+  prompt: "Review this before v2.0."
+  should_trigger: true
+  notes: "B1 Primary. Guard: agent does not collapse structure + docs into a single vague pass."
+- scenario: B5
+  prompt: "The docs say the code is structured this way — is that still true?"
+  should_trigger: true
+  notes: "B5 Primary. Guard: target of the audit is the doc, so docs-audit leads."
+- scenario: B6
+  prompt: "Summarize the design decisions before we compact."
+  should_trigger: true
+  notes: "B6 Primary. Guard: compression-event vs doc-file target."
+- scenario: C9
+  prompt: "This README is getting long — condense it."
+  should_trigger: true
+  notes: "C9 Primary. Guard: context-compression's CTB boundary: session context is its target; doc files are docs-audit's (or ..."
+- scenario: C15
+  prompt: "Audit our docs against the current codebase."
+  should_trigger: true
+  notes: "C15 Primary. Guard: both skills have legitimate triggers in this moment; the ordering rule (producing skill before co..."

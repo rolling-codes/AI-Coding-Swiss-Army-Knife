@@ -204,6 +204,30 @@ for dir in "$ROOT"/skills/*/; do
 done
 echo "  [14] all SKILL.md frontmatter blocks declare allowed-tools:."
 
+# 15. Every skill named as Primary in routing-scenarios.md must have a
+#     routing_trigger.yaml. Ensures gen-routing-tests.py has been run after any
+#     scenario that names a new Primary skill. Soft gate: only fails for skills
+#     that actually exist as directories (not annotation artifacts like "dev-workflow-as-implementer").
+SCENARIOS_FILE="$ROOT/tools/routing-scenarios.md"
+if [ -f "$SCENARIOS_FILE" ]; then
+  grep "^- Primary:" "$SCENARIOS_FILE" \
+    | sed 's/.*Primary: //' \
+    | sed 's/ [·(].*//' \
+    | tr -d ' \r' \
+    | sort -u \
+    | while read -r skill; do
+        [ -n "$skill" ] || continue
+        [ -d "$ROOT/skills/$skill" ] || continue
+        if [ ! -f "$ROOT/skills/$skill/tests/routing_trigger.yaml" ]; then
+          echo "FAIL: skill '$skill' is Primary in routing-scenarios.md but skills/$skill/tests/routing_trigger.yaml is missing — run: python tools/gen-routing-tests.py" >&2
+          echo x >> "$FAILFILE"
+        fi
+      done
+  echo "  [15] routing-scenario Primary coverage checked."
+else
+  echo "note: tools/routing-scenarios.md not found — check 15 skipped"
+fi
+
 if [ -s "$FAILFILE" ]; then
   echo "" >&2
   echo "Validation failed. This checks internal consistency only — passing" >&2

@@ -1,0 +1,37 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A11
+  prompt: "Add a `--dry-run` flag to the exporter."
+  should_trigger: true
+  notes: "A11 Primary. Guard: Size Check → full pipeline; TDD and review not skipped for a \"small\" feature."
+- scenario: A14
+  prompt: "Update the dependencies."
+  should_trigger: true
+  notes: "A14 Primary. Guard: agent does not search package.json, README, or Makefile when the recipe is already recorded; it u..."
+- scenario: A15
+  prompt: "Run the build."
+  should_trigger: true
+  notes: "A15 Primary. Guard: agent does not execute a guessed command (`npm run build`, `make`, etc.) before completing at lea..."
+- scenario: C12
+  prompt: "My linter found a null pointer issue in auth.js line 42. What severity is this?"
+  should_trigger: true
+  notes: "C12 Primary. Guard: \"severity\" in the query does not route to bug-triage unless there is a pile of findings to rank; ..."
+- scenario: C13
+  prompt: "The SKILL.md for changelog is out of date — update it to reflect the new workflow."
+  should_trigger: true
+  notes: "C13 Primary. Guard: a direct \"update this to reflect X\" instruction does not require an audit pass; docs-audit fires ..."
+- scenario: C14
+  prompt: "Before we implement the payment service, write the tests for it."
+  should_trigger: true
+  notes: "C14 Primary. Guard: \"write the tests\" is test-strategy's trigger in isolation, but when a build pipeline is active th..."
+- scenario: C18
+  prompt: "We need to add caching to the API layer — it would improve the structure too."
+  should_trigger: true
+  notes: "C18 Primary. Guard: \"structure\" in the request does not trigger architecture-review when the primary event is a mid-b..."
+- scenario: C28
+  prompt: "Deploy to production."
+  should_trigger: true
+  notes: "C28 Primary. Guard: absence of evidence is not permission to invent. Training-data plausibility (\"most Node projects ..."
+- scenario: C29
+  prompt: "Run the tests."
+  should_trigger: true
+  notes: "C29 Primary. Guard: the registry exists specifically to prevent repeated research; re-running the research protocol w..."

@@ -1,0 +1,29 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A5
+  prompt: "Review my diff before I merge."
+  should_trigger: false
+  notes: "A5 Inactive. Guard: runs even on a small diff; verdict backed by the five questions."
+- scenario: A8
+  prompt: "Are the docs still accurate?"
+  should_trigger: false
+  notes: "A8 Inactive. Guard: each claim checked by grep against source, not judged by how confident the prose reads."
+- scenario: A13
+  prompt: "While I'm writing this export function, I also want to add a web dashboard."
+  should_trigger: false
+  notes: "A13 Inactive. Guard: the addition is classified (Expansion) and the decision is surfaced to the user before any dashb..."
+- scenario: B2
+  prompt: "This is over-engineered — clean it up."
+  should_trigger: false
+  notes: "B2 Inactive. Guard: correct side of the ai-hygiene ↔ architecture-review boundary (single new unit vs cross-module st..."
+- scenario: B5
+  prompt: "The docs say the code is structured this way — is that still true?"
+  should_trigger: false
+  notes: "B5 Inactive. Guard: target of the audit is the doc, so docs-audit leads."
+- scenario: C11
+  prompt: "I just refactored the entire auth layer — can you review it?"
+  should_trigger: false
+  notes: "C11 Inactive. Guard: \"refactor\" + \"entire layer\" sounds structural but code-review owns correctness review of a finis..."
+- scenario: C18
+  prompt: "We need to add caching to the API layer — it would improve the structure too."
+  should_trigger: false
+  notes: "C18 Inactive. Guard: \"structure\" in the request does not trigger architecture-review when the primary event is a mid-..."

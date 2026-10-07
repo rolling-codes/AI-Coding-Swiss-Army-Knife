@@ -1,0 +1,9 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A8
+  prompt: "Are the docs still accurate?"
+  should_trigger: false
+  notes: "A8 Inactive. Guard: each claim checked by grep against source, not judged by how confident the prose reads."
+- scenario: C9
+  prompt: "This README is getting long — condense it."
+  should_trigger: false
+  notes: "C9 Inactive. Guard: context-compression's CTB boundary: session context is its target; doc files are docs-audit's (or..."

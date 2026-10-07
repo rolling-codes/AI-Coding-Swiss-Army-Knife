@@ -74,22 +74,41 @@ structure respectively). See the disambiguation table in
 
 ## Validating the pack itself
 
-`tools/validate-pack.sh` is a static consistency check for this repo. It catches
-a skill added without a routing-table entry (or a router arrow pointing at a
-skill that doesn't exist), a skill missing from the README table, a SKILL.md with
-no `description:`, an agent whose frontmatter name doesn't match its filename,
-malformed JSON config, broken hook script syntax, or a hooks.json pointing at a
-script that doesn't exist. Run it before tagging a release of the pack:
+Two complementary checks cover different layers of correctness:
+
+**Static consistency** — `tools/validate-pack.sh` (15 checks). Catches a skill
+added without a routing-table entry, a router arrow pointing at a renamed skill,
+a SKILL.md missing `description:` / `model:` / `allowed-tools:`, an agent whose
+frontmatter name doesn't match its filename, malformed JSON, broken hook script
+syntax, a hooks.json pointing at a missing script, and a Primary skill in
+routing-scenarios.md with no generated routing test file. Run before every release:
 
 ```bash
 sh tools/validate-pack.sh
 ```
 
-This is a static check only. It does not trigger skills or fire hooks inside
-an actual Claude Code session — passing it means the files are internally
-consistent, not that the pack has been exercised end to end. For skill *selection*
-(which skill fires, which stay silent, ordering, and the shortcuts to refuse),
-smoke-test against `tools/routing-scenarios.md` in a real session before shipping.
+**Routing accuracy** — `tools/eval-routing.sh` (requires
+[skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
+and a Claude API key). Converts `tools/routing-scenarios.md` into per-skill YAML
+test files via `tools/gen-routing-tests.py` (run once, or after scenario changes),
+then invokes `bsc.py eval` on each skill that has routing tests and prints a pass/fail
+routing accuracy table. Skills without routing test files are skipped; exit code is
+non-zero if any skill fails.
+
+```bash
+# Generate test files from routing-scenarios.md (once, or after scenario edits)
+python tools/gen-routing-tests.py
+
+# Structural check — no Claude calls, fast
+sh tools/eval-routing.sh
+
+# Live routing eval — calls real Claude sessions (costs API tokens)
+sh tools/eval-routing.sh --live
+```
+
+`validate-pack.sh` proves the files are internally consistent. `eval-routing.sh --live`
+proves the router sends each class of task to the right skill. Both are needed; neither
+substitutes for the other.
 
 ## Memory files
 

@@ -1,0 +1,9 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A12
+  prompt: "Here are findings from SonarQube, the code review, and manual testing — what do I fix first?"
+  should_trigger: true
+  notes: "A12 Primary. Guard: triage ranks the existing pile; it does not find new bugs or re-run the review."
+- scenario: B4
+  prompt: "Here are three reviewers' outputs — what do I fix first?"
+  should_trigger: true
+  notes: "B4 Primary. Guard: find-vs-rank boundary; order is review → triage, and here review already happened."

@@ -1,0 +1,17 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A6
+  prompt: "Write tests for this function / what edge cases am I missing?"
+  should_trigger: true
+  notes: "A6 Primary. Guard: cases enumerated in prose before test code; a regression test is proven to fail pre-fix."
+- scenario: C7
+  prompt: "The fix looks right, call it done."
+  should_trigger: true
+  notes: "C7 Primary. Guard: no done-claim without the fail-then-pass evidence."
+- scenario: C14
+  prompt: "Before we implement the payment service, write the tests for it."
+  should_trigger: true
+  notes: "C14 Primary. Guard: \"write the tests\" is test-strategy's trigger in isolation, but when a build pipeline is active th..."
+- scenario: C17
+  prompt: "I fixed the null pointer bug from the triage report. Review the fix, add a regression test, and confirm the severity ranking still stands."
+  should_trigger: true
+  notes: "C17 Primary. Guard: \"severity ranking\" is not a trigger for re-running bug-triage on one already-classified item; re-..."

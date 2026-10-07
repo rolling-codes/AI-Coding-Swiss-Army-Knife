@@ -1,0 +1,17 @@
+# Generated from tools/routing-scenarios.md — do not edit; re-run gen-routing-tests.py to update
+- scenario: A4
+  prompt: "Can I ship this? About to tag v2.3.0."
+  should_trigger: true
+  notes: "A4 Primary. Guard: tests are re-run against the current tree, not reported from memory; no \"Ready to tag\" with any ❌."
+- scenario: C3
+  prompt: "Tests passed earlier — mark the release ready."
+  should_trigger: true
+  notes: "C3 Primary. Guard: verification is evidence-based (handoff `validated` field = actually run)."
+- scenario: C16
+  prompt: "We're ready to ship v2.1.0 — update the changelog, make sure everything is consistent, and commit it."
+  should_trigger: true
+  notes: "C16 Primary. Guard: \"changelog\" + \"consistent\"/\"ship\" + \"commit\" each trigger a separate skill — a naive agent activa..."
+- scenario: C22
+  prompt: "This is a pure Markdown plugin pack — there's no runnable code, tests don't apply. Run release-prep."
+  should_trigger: true
+  notes: "C22 Primary. Guard: the checklist has no N/A state. An absent test suite is not a passing test suite; the agent must ..."
