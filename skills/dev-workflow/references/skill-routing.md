@@ -72,6 +72,10 @@ one primary and zero or one supporting skill.
 | test-strategy | Enumerate cases + write unit/integration/regression tests | "write tests", "what edge cases", post-fix | Enforcing test-first order mid-build (dev-workflow TDD) |
 | context-compression | Deliberate keep/drop of **session** context; memory aging | Budget ≥ ~50%, before manual /compact | Doc files (→ docs-audit); code structure; routine memory writes |
 | docs-audit | **Doc files** vs current code: current/stale/dead/gap | "are the docs stale", post-release doc pass | Session context (→ context-compression); code structure; net-new authoring |
+| security-audit | Vulnerability scanning: dep CVEs (osv-scanner), SAST (semgrep), secrets | "check for vulnerabilities", "CVE scan", "any secrets in this" | General code quality (→ code-review); outdated packages (→ dependency-check) |
+| dependency-check | Outdated / deprecated / license-problematic packages | "are deps up to date", "outdated packages", "license compliance" | CVE scanning (→ security-audit); upgrading packages (→ dev-workflow) |
+| observability-audit | Logging, tracing, metrics, error-handling coverage gaps | "do we have enough logging", "alerting gaps", "check error handling" | Adding log statements (→ dev-workflow); performance profiling; testing error paths |
+| kill-test | Pre-build go/no-go: exists? stdlib? scope clear? conflicts? maintainable? | "should I build this", "kill test this", "go/no-go on this feature" | Reviewing finished code (→ code-review); release validation (→ release-prep) |
 
 Every pair not listed in §5 has non-overlapping triggers — the table above
 resolves them directly.

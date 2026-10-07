@@ -2,9 +2,10 @@
 name: scope-creep
 description: >
   Use this to detect and assess scope creep when a new feature, change, or
-  dependency is introduced mid-build — fires proactively, without being asked,
-  on "while we're at it", "can we also", "one more thing", "quickly add",
-  "let's also", or a mid-build request that changes the original goal or
+  dependency is introduced mid-build — fires automatically during dev-workflow
+  and code-review sessions without being invoked, and can also be invoked
+  directly on "while we're at it", "can we also", "one more thing", "quickly add",
+  "let's also", or any mid-build request that changes the original goal or
   expands surface area; NOT for the original task itself (dev-workflow), NOT
   for ranking bug findings (bug-triage), and NOT for defining scope on a
   project that hasn't started.

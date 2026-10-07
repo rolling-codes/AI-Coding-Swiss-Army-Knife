@@ -5,6 +5,29 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-10-07
+
+### Added
+
+- **`security-audit` skill** (Sonnet): vulnerability scanning via `osv-scanner` (all languages) + `semgrep` (`p/security-audit` ruleset) + language-specific tools detected from lockfiles (`npm audit`, `cargo audit`, `pip-audit`, `bundle audit`), plus a targeted secrets grep pass. Writes findings to `.claude/ledger.json` for downstream skills to consume without re-running the scan. Severity-ranked report with missing-tool gaps surfaced as Medium findings.
+- **`dependency-check` skill** (Haiku): detects outdated, deprecated, and license-problematic packages per detected package manager (`npm outdated`, `pip list --outdated`, `cargo outdated`, `go list -u`, `bundle outdated`). Produces a table with current/latest/breaking columns; major bumps lead the output.
+- **`observability-audit` skill** (Sonnet): maps critical paths (API routes, auth boundaries, external calls, write paths) then greps for log/trace/metric call sites and error-handling boundaries, classifying gaps as Critical (silent failure), High (no context in error logs), Medium (success path unconfirmed), or Low (missing debug detail).
+- **`kill-test` skill** (Haiku): five-question pre-build go/no-go gate — already exists? stdlib/dep covers it? scope clear? conflicts with existing patterns? will it be maintained? — returns `GO / NO-GO / GO WITH WARNING` with a one-line next action. Inspired by redamancy231-create/claude-skills.
+- **`guard-destructive.sh`** PreToolUse hook: blocks `git push --force` / `git push -f` and `git reset --hard` with a descriptive error; bypass with `DEV_WORKFLOW_ALLOW_DESTRUCTIVE=1` for intentional use.
+- **Ledger convention** in `dev-workflow`: documents `.claude/ledger.json` as the skill-to-skill handoff contract — producing skills write structured findings there; consuming skills read the reference rather than the full conversation, reducing context bloat in multi-skill sessions.
+- **`dev-workflow` advanced delegation references** (5 files): `agent-health.md` (sub-agent accuracy scoring), `budget.md` (pre-dispatch token-budget check), `checkpoint.md` (Graphify-backed run-state for pipeline interruption recovery), `dynamic-routing.md` (complexity-based model-tier selection), `routing-cache.md` (routing decision reuse across repeated entity sets) — Graphify-optional orchestration layer documented in the router's reference table.
+- **`dev-workflow/tests/`**: trigger and behavior eval data (`should_trigger.yaml`, `should_not_trigger.yaml`, `expected_behavior.yaml`) for bsc.py eval passes.
+
+### Changed
+
+- Trigger descriptions sharpened on four existing skills:
+  - `dev-workflow`: added concrete trigger phrases ("fix this bug", "add a feature", "implement X", "refactor Y", "what should I work on next", "create a branch", "open a PR", "push this", "check CI") — the previous "everyday dev task" phrasing was too vague to fire reliably.
+  - `bug-triage`: clarified "2 or more existing findings to prioritize" and added an explicit note distinguishing it from `code-review` ("use code-review to find new bugs in a diff").
+  - `context-compression`: replaced "~50%" with "/cost shows context ≥ 50% (or the context bar is past halfway in the IDE)" — a measurable, observable trigger rather than a vague heuristic.
+  - `scope-creep`: documented that the skill fires automatically during `dev-workflow` and `code-review` sessions without being invoked, removing ambiguity about manual vs. auto-fire behavior.
+- `dev-workflow` routing table, `skill-routing.md` CTB table, and README skills table updated with entries for all four new skills.
+- `code-review` §B: removed redundant "Integration with workflows" section whose content was already covered by the "When to delegate" table above it.
+
 ## [2.4.1] - 2026-10-04
 
 ### Fixed

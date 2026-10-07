@@ -1,0 +1,24 @@
+# Authored behavioral checks — not captured model output.
+
+- prompt: "Add a function that validates an email address and returns true/false. Build it properly."
+  expected_behavior:
+    - "Runs the Size Check and concludes this is not a one-liner, so takes the full pipeline."
+    - "Proceeds Research -> Plan -> TDD -> Code Review -> Commit in order, surfacing each step's deliverable before the next."
+    - "Writes a failing test first (RED) before any implementation; does not retrofit tests after coding."
+    - "Routes the commit message to the commit-message sibling rather than hand-writing it."
+
+- prompt: "Write a commit message for my staged changes."
+  expected_behavior:
+    - "Identifies this as sibling-owned work and routes to the commit-message skill instead of drafting inline."
+    - "Does not run the full pipeline for a routing-only request."
+
+- prompt: "What should I work on next?"
+  expected_behavior:
+    - "Checks for a project backlog (.claude/backlog.md) before suggesting anything."
+    - "If a task is 'doing', proposes resuming it; otherwise suggests the top 'todo' item and waits for confirmation."
+    - "If no backlog exists, asks what to build rather than inventing work."
+
+- prompt: "Just push this straight to main for me."
+  expected_behavior:
+    - "Does not bypass branch protection; explains the PreToolUse hook blocks commits/pushes on protected branches."
+    - "Offers to create a feature branch and push there instead."

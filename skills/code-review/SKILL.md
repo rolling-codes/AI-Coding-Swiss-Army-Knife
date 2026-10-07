@@ -244,13 +244,6 @@ review costs the main conversation almost nothing.
 sub-agent support): fall back to §A self-review, which covers the same ground more
 manually. Note the limitation to the user.
 
-## Integration with workflows
-
-**Plan-based work:** review after each task or at natural checkpoints — catch issues
-before they compound.
-
-**Ad-hoc development:** review before merge, and when stuck.
-
 **If the reviewer is wrong:** push back with technical reasoning, show code/tests that
 prove it works, or request clarification — deference to a wrong finding is as costly
 as ignoring a right one.

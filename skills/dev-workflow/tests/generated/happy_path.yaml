@@ -1,0 +1,17 @@
+- scenario: standard-trigger-explicit
+  prompt: Help me dev workflow — Use when the user gives an everyday dev task or asks
+    what to work on next, to open an issue, branch, push, check CI, or merge — runs
+    the Research→Plan→TDD→Review→Commit pipeline, GitHub ops, session memory, and
+    model routing.
+  should_trigger: true
+  notes: Explicit use of skill name in request
+- scenario: standard-trigger-implicit
+  prompt: I need to the user gives an everyday dev task or asks what to work on next,
+    to open an issue, branch, push, check ci, or merge — runs the research→plan→tdd→review→commit
+    pipeline, github ops, session memory, and model routing for my project.
+  should_trigger: true
+  notes: Implicit intent without naming the skill
+- scenario: casual-phrasing
+  prompt: hey can you help me with dev workflow? i've got some stuff i need done
+  should_trigger: true
+  notes: Casual lowercase phrasing — tests description robustness

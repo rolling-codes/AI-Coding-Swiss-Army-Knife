@@ -2,12 +2,12 @@
 name: context-compression
 description: >
   Use this to manage token budget explicitly during long sessions — summarize,
-  decide keep vs. drop, and age out stale context — when the context budget
-  crosses ~50%, before a deliberate manual /compact, or on "context is getting
-  long", "summarize what we've done", "what can we drop"; NOT for
-  documentation drift (docs-audit), NOT for code structure (architecture-review),
-  and NOT for routine session-memory writes outside a compression
-  event (dev-workflow's memory reference).
+  decide keep vs. drop, and age out stale context — when /cost shows context ≥ 50%
+  (or the context bar is past halfway in the IDE), before a deliberate manual
+  /compact, or on "context is getting long", "summarize what we've done",
+  "what can we drop"; NOT for documentation drift (docs-audit), NOT for code
+  structure (architecture-review), and NOT for routine session-memory writes
+  outside a compression event (dev-workflow's memory reference).
 allowed-tools: [Read, Edit]
 model: haiku
 ---

@@ -1,6 +1,6 @@
 # Dev Workflow Pack
 
-Thirteen development-workflow skills rebuilt through the
+Seventeen development-workflow skills rebuilt through the
 [skill-creator](https://github.com/rolling-codes/-the-better-skill-creator-skill-)
 six-gate pipeline, plus hook-enforced branch protection and skill-driven session
 memory. One Claude Code plugin.
@@ -16,7 +16,7 @@ thirteen before release.
 
 Skills are instructions Claude can forget. Hooks are guarantees that fire every time.
 
-- **PreToolUse** (Bash) — **active by default.** Blocks `git commit` and `git push` while on `main`, `master`, `develop`, `release/*`, or `hotfix/*`, and tells Claude to create a feature branch. Matching is a plain text scan, so a command that merely mentions "git commit" inside a string can false positive; disable per repo in `/hooks` if it gets in the way.
+- **PreToolUse** (Bash) — **active by default.** Two guards: (1) blocks `git commit` and `git push` while on `main`, `master`, `develop`, `release/*`, or `hotfix/*`, and tells Claude to create a feature branch; (2) blocks `git push --force` and `git reset --hard` with a descriptive error — set `DEV_WORKFLOW_ALLOW_DESTRUCTIVE=1` to bypass when intentional. Both use plain text matching; disable per repo in `/hooks` if they get in the way.
 - **SessionStart** + **PreCompact** (memory hooks) — **ship, but are not registered by default.** `load-memory.sh` (SessionStart) would inject a short memory digest — branch, dirty-file count, the one-paragraph summary from `.claude/memory.json`, and a pointer to the full files; `save-memory.sh` (PreCompact) would snapshot branch, uncommitted-file count, and the last five commits to `.claude/memory-auto.json`. They are left out of `hooks.json` because session persistence is handled either by the memory skill writing `.claude/memory.json` directly (dev-workflow / context-compression) or by an external tool such as [claude-mem](https://github.com/thedotmack/claude-mem). To turn the digest automation on, register them in `/hooks` (SessionStart → `load-memory.sh`, PreCompact → `save-memory.sh`) — but don't run them alongside claude-mem, or two systems fight over the same session. See `UPGRADE-SLOTS.md`.
 
 All three scripts are plain POSIX sh, depend only on `git`, never block (always exit 0), and stay silent outside a git repo. On Windows they run under Git Bash, which ships with Git for Windows.
@@ -59,6 +59,10 @@ Restart Claude Code (or run `/reload-plugins`) after installing — hooks regist
 | test-strategy | Unit/integration/edge-case/regression test generation |
 | context-compression | Session context budget: summarize, keep/drop, age memory |
 | docs-audit | Docs vs. code drift: current/stale/dead/gap classification |
+| security-audit | Vulnerability scanning: deps (osv-scanner), SAST (semgrep), secrets |
+| dependency-check | Outdated, deprecated, and license-problematic package detection |
+| observability-audit | Logging, tracing, and error-handling coverage gaps |
+| kill-test | Pre-build go/no-go gate: 5-question check before implementing |
 
 context-compression, docs-audit, and architecture-review sound similar —
 they audit three different targets (session memory, doc files, source

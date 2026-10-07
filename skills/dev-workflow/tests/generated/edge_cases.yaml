@@ -1,0 +1,27 @@
+- scenario: empty-body
+  prompt: ''
+  should_trigger: false
+  notes: Empty prompt should not trigger any skill
+- scenario: very-long-prompt
+  prompt: 'I want to use when the user gives an everyday dev task or asks what to
+    work on next, to open an issue, branch, push, check ci, or merge — runs the research→plan→tdd→review→commit
+    pipeline, github ops, session memory, and model routing but there is a lot of
+    context here. Here is some background: lorem ipsum lorem ipsum lorem ipsum lorem
+    ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+    ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+    ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+    ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum'
+  should_trigger: true
+  notes: Long prompt with relevant intent buried in background noise
+- scenario: special-characters
+  prompt: 'Help with dev-workflow? #urgent @me $result [ASAP] <skill>'
+  should_trigger: true
+  notes: Special chars in the request — tests description regex tolerance
+- scenario: wrong-capitalization
+  prompt: DEV-WORKFLOW — PLEASE DO THIS NOW
+  should_trigger: true
+  notes: All-caps phrasing with skill name

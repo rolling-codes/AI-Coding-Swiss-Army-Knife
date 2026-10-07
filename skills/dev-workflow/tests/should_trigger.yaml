@@ -1,0 +1,21 @@
+# dev-workflow should fire on these — everyday dev work it owns directly.
+- prompt: "Add a user settings feature to the app."
+  expected: true   # substantial build -> full pipeline
+
+- prompt: "Implement caching for these API responses and do it properly."
+  expected: true   # build work -> pipeline
+
+- prompt: "What should I work on next?"
+  expected: true   # backlog / session-start
+
+- prompt: "Open an issue for the login timeout bug."
+  expected: true   # GitHub ops
+
+- prompt: "Create a branch and push this up."
+  expected: true   # GitHub ops
+
+- prompt: "Check the CI on my pull request."
+  expected: true   # CI
+
+- prompt: "Merge this once the checks are green."
+  expected: true   # merge

@@ -1,12 +1,13 @@
 ---
 name: bug-triage
 description: >
-  Use this to consolidate, deduplicate, and severity-rank a pile of raw bug
-  findings into one actionable report when multiple bugs, findings, or review
-  results need ranking — "triage these", "which bugs should I fix first",
-  "consolidate findings", or a dump of multiple reports or review-agent
-  output; NOT for fixing the bugs (dev-workflow), NOT for reviewing a diff to
-  find new issues (code-review), and NOT for a single already-identified bug.
+  Use this to consolidate, deduplicate, and severity-rank 2 or more existing bug
+  findings into one actionable report — "triage these", "which bugs should I fix
+  first", "consolidate findings", or a dump of multiple reports or review-agent
+  output. Use code-review to find new bugs in a diff; use this when you already
+  have findings and need to prioritize them. NOT for fixing bugs (dev-workflow),
+  NOT for finding new bugs in a diff (code-review), and NOT for a single
+  already-identified bug.
 allowed-tools: [Read, Grep, Glob]
 model: sonnet
 ---

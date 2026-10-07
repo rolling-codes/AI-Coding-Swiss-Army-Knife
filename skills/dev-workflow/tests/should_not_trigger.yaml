@@ -1,0 +1,25 @@
+# Boundary cases — a sibling pack skill owns these; dev-workflow should defer to it,
+# not be the skill selected. These directly test the description's boundary clause.
+- prompt: "Write a commit message for my staged changes."
+  expected: false   # -> commit-message
+
+- prompt: "Draft a pull request description for this branch."
+  expected: false   # -> pr-description
+
+- prompt: "Update CHANGELOG.md for the v2.0 release."
+  expected: false   # -> changelog
+
+- prompt: "Run the pre-release checklist before I tag."
+  expected: false   # -> release-prep
+
+- prompt: "Review my diff for correctness bugs before I merge."
+  expected: false   # -> code-review
+
+- prompt: "Does this code look over-engineered or AI-written?"
+  expected: false   # -> ai-hygiene
+
+- prompt: "Consolidate and rank these bug findings by severity."
+  expected: false   # -> bug-triage
+
+- prompt: "What's a good recipe for sourdough?"
+  expected: false   # unrelated, no skill

@@ -1,15 +1,14 @@
 ---
 name: dev-workflow
 description: >
-  Use this to orchestrate everyday development work — GitHub operations
-  (branches, issues, PRs, CI, merges), the five-step pipeline (Research →
-  Plan → TDD → Code Review → Commit), session memory, and model routing —
-  when given a development task or asked "what should I work on next",
-  "open an issue", "create a branch", "push this up", "check the CI",
-  "merge this"; NOT for work a dedicated pack skill owns (commit messages,
-  PR descriptions, changelog entries, release checks, code review passes,
-  bug triage, mid-build scope flags, architecture/docs/context audits,
-  test generation) — route to that skill and return.
+  Use when the user gives an everyday dev task or asks what to work on next,
+  to open an issue, branch, push, check CI, or merge — runs the
+  Research→Plan→TDD→Review→Commit pipeline, GitHub ops, session memory, and
+  model routing. Trigger phrases: "fix this bug", "implement X", "add a feature",
+  "refactor Y", "what should I work on next", "create a branch", "open a PR",
+  "push this", "check CI". Not for work a sibling skill owns (commits, PRs,
+  changelogs, releases, code review, bug triage, scope, audits, tests) —
+  route and return.
 allowed-tools: [Read, Grep, Glob, Bash, Edit, Write, Agent]
 model: sonnet
 ---
@@ -35,24 +34,26 @@ live in `references/`, loaded one at a time, only for the task at hand.
 
 ## Environment Verification
 
-The pipeline and the context rules lean on ECC. Before running the full
-pipeline, verify these exist:
+The pipeline and the context rules lean on ECC rules that live in the user's home
+config (not bundled with this skill). Before running the full pipeline, verify they
+exist:
 
-- `~/.claude/rules/ecc/common/development-workflow.md`
-- `~/.claude/rules/ecc/common/git-workflow.md`
-- `~/.claude/rules/ecc/common/testing.md`
-- `~/.claude/rules/ecc/common/code-review.md`
-- `~/.claude/rules/ecc/common/performance.md` — context-management foundation
+```bash
+for f in development-workflow git-workflow testing code-review performance; do
+  test -f ~/.claude/rules/ecc/common/$f.md || echo "MISSING: ecc/common/$f.md"
+done
+```
 
-If any are missing, stop and tell the user which ones — the pipeline's
-test-coverage, review, and context-budget requirements come from those files, so
-proceeding without them means enforcing rules that aren't defined.
+(performance.md is the context-management foundation.) If any are missing, stop and
+tell the user which ones — the pipeline's test-coverage, review, and context-budget
+requirements come from those files, so proceeding without them means enforcing rules
+that aren't defined.
 
 **Optional integration — Graphify (knowledge base):** if the graphify skill is
 installed (invoked via `/graphify`), durable knowledge — decisions with rationale,
 architecture changes, lessons — flows to the knowledge graph at session end; see
-`references/memory.md` § Knowledge Base Layer. If graphify is absent,
-`.claude/memory.json` remains the only persistence layer: note the gap to the
+`references/memory.md` § Knowledge Base Layer. If graphify is absent, the project's
+local .claude/memory.json remains the only persistence layer: note the gap to the
 user, don't block on it.
 
 ## Iron Law
@@ -92,6 +93,10 @@ each sibling carries guardrails this skill does not duplicate:
 | Generate unit/integration/edge-case/regression tests | → **test-strategy** |
 | Manage token budget, summarize, or age out stale context | → **context-compression** |
 | Audit/prune docs against what the code actually does | → **docs-audit** |
+| Scan for vulnerabilities, CVEs, hardcoded secrets, or OWASP issues | → **security-audit** |
+| Check for outdated, deprecated, or license-problematic packages | → **dependency-check** |
+| Audit logging, tracing, and error-handling coverage | → **observability-audit** |
+| Pre-build go/no-go gate — is this worth implementing? | → **kill-test** |
 
 **Disambiguating the three "assess and prune" skills** — the target of the audit
 is the disambiguator:
@@ -132,7 +137,7 @@ Before starting pipeline work, check for a project backlog:
 cat .claude/backlog.md 2>/dev/null
 ```
 
-If `.claude/backlog.md` exists:
+If a project backlog file (.claude/backlog.md) exists:
 1. Show the board summary (counts of todo / doing / done)
 2. If a task is `doing`, resume it — confirm with the user or ask to redirect
 3. If no `doing` task, suggest the top `todo` item and **wait for user confirmation**
@@ -148,10 +153,10 @@ Also check for project recipes:
 cat .claude/recipes.md 2>/dev/null
 ```
 
-If `.claude/recipes.md` exists, note the known commands — they take precedence over
-guessing from training data when the user asks to run, build, update, or deploy. If
-it doesn't exist, skip silently. See `references/recipes.md` for the format and the
-research protocol when a command is missing.
+If a project recipes file (.claude/recipes.md) exists, note the known commands — they
+take precedence over guessing from training data when the user asks to run, build,
+update, or deploy. If it doesn't exist, skip silently. See `references/recipes.md` for
+the format and the research protocol when a command is missing.
 
 ## The Pipeline
 
@@ -228,7 +233,7 @@ For orchestration work outside the pipeline, resolve the model alias via
 | Issues / project tracking | `fast` | `references/issues.md` |
 | Delegate subtask | task-dependent | `references/sub-agents.md` |
 | Resume session | `fast` | `references/memory.md` (§ Load) |
-| Pick next task / what to work on next | `fast` | `references/backlog.md` (if `.claude/backlog.md` exists) |
+| Pick next task / what to work on next | `fast` | `references/backlog.md` (if a .claude/backlog.md exists) |
 | Run / build / update / deploy the project | `fast` | `references/recipes.md` |
 | End session / context long | `fast` | `references/memory.md` (§ Write) |
 | Detect repo type / stack / conventions | `fast` | `references/repo-detection.md` |
@@ -247,8 +252,8 @@ because registry updates must not require touching this file.
 
 Context management is grounded in ECC: this rule and
 `references/context-management.md` operationalize the Context Window Management
-guidance in `~/.claude/rules/ecc/common/performance.md`. Where the two disagree,
-ECC wins — it's the user-level rule set.
+guidance in the ECC performance rule (ecc/common/performance.md). Where the two
+disagree, ECC wins — it's the user-level rule set.
 
 Depth by task: routine change → target file only; feature work → interface +
 relevant files; architecture/security/debugging → full chain.
@@ -261,9 +266,69 @@ Full rules → `references/context-management.md`
 ## Branch Protection (enforced by hook, policy is external)
 
 The plugin's PreToolUse hook blocks `git commit` / `git push` on branches matching
-`hooks/config/branch-policy.json` (default: `main`, `master`, `develop`,
-`release/*`, `hotfix/*`). The hook contains no branch names — edit the policy file
-to change protection. If blocked, create a feature branch and retry.
+the plugin's branch-policy config (hooks/config/branch-policy.json; default: `main`,
+`master`, `develop`, `release/*`, `hotfix/*`). The hook contains no branch names —
+edit the policy file to change protection. If blocked, create a feature branch and
+retry.
+
+## Reference files
+
+Load exactly one, only when the task needs it (progressive disclosure — see Context Rule).
+
+**Pipeline & routing**
+- `references/skill-routing.md` — full skill-selection process, pairwise overlap table, conflict precedence, handoff contract; load only when the routing tables above don't resolve the task.
+- `references/planning.md` — plan / decompose / triage procedure.
+- `references/coding-tasks.md` — write / refactor / implement; also architecture & security work.
+- `references/code-review-routing.md` — reviewing someone else's PR.
+- `references/debugging.md` — complex-issue debugging.
+- `references/context-management.md` — general discovery and load-order rules.
+- `references/memory.md` — session resume / write and the Knowledge Base layer.
+
+**GitHub operations**
+- `references/github-operations.md` — PR / branch / push / merge.
+- `references/github-patterns.md` — advanced gh CLI and API patterns the core commands don't cover.
+- `references/issues.md` — issues and project tracking.
+- `references/pr-standards.md` — PR body standards.
+- `references/repo-detection.md` — detect repo type, stack, conventions.
+
+**Project state**
+- `references/backlog.md` — backlog board format and update protocol.
+- `references/recipes.md` — project recipes format and the research protocol for missing commands.
+
+## Ledger Convention (skill-to-skill handoff)
+
+When a sibling skill (security-audit, code-review, bug-triage) produces structured
+findings, it writes them to `.claude/ledger.json` — a session scratch file. The
+consuming skill reads the file reference, not the full prior conversation, keeping
+multi-skill sessions from bloating context. Format:
+
+```json
+{
+  "session_id": "<uuid>",
+  "timestamp": "<ISO-8601>",
+  "source_skill": "<skill-name>",
+  "summary": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+  "findings": [],
+  "next_action": "<suggested-next-step>"
+}
+```
+
+Skills that write the ledger: **security-audit**, **code-review** (§B delegated
+results), **bug-triage**. Skills that read it: any skill that says "use the
+findings from the previous step." The file is session-scoped — safe to delete
+between sessions.
+
+**Delegation & orchestration** (Graphify-backed; advanced)
+- `references/sub-agents.md` — delegating a subtask.
+- `references/agent-health.md` — sub-agent accuracy scoring.
+- `references/budget.md` — pre-dispatch token-budget check.
+- `references/checkpoint.md` — Graphify-backed run-state so pipelines survive interruption.
+- `references/dynamic-routing.md` — complexity-based model-tier routing.
+- `references/routing-cache.md` — reuse prior routing decisions for seen entity sets.
+- `references/graph-tools.md` — canonical graph-tool availability check.
+
+**Config**
+- `model-registry.json` — resolves `task → alias → API string`; never hardcode a model name.
 
 ## Notes — Run Free
 
