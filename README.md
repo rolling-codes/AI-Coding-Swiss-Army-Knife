@@ -17,6 +17,16 @@ test suites and run against real Claude sessions via `tools/eval-routing.sh`.
 And every skip or shortcut a model might attempt is named in each skill's Red
 Flags table with the correct behavior alongside it.
 
+Two other principles run through the whole pack. First, nothing loads
+speculatively — every file read must be justified by the current task, and the
+load order (task → docs → architecture → tests → relevant source) stops as soon
+as context is sufficient. This keeps each step from compounding the token budget
+of the next. Second, when one skill hands work to another it passes a compact
+structured block rather than the conversation — producing skills write findings
+to `.claude/ledger.json`; consuming skills read the reference. That means a
+three-skill pipeline costs context proportional to the handoffs, not to the full
+history.
+
 ## What the hooks do
 
 Skills are instructions Claude can forget. Hooks are guarantees that fire every time.
