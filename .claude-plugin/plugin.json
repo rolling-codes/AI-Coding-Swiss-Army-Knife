@@ -1,7 +1,7 @@
 {
   "name": "dev-workflow-pack",
   "version": "2.7.0",
-  "description": "Twenty skills for the whole development lifecycle — writing, reviewing, testing, securing, profiling, refactoring, and releasing — built through the skill-creator six-gate pipeline, with machine-executable routing tests and hook-enforced branch and destructive-command protection. One Claude Code plugin.",
+  "description": "Twenty development-workflow skills that know when to fire and when to stay silent. Each carries an explicit Capability + Trigger + Boundary, an Iron Law, and a Red Flags table. Routing accuracy is machine-tested against 29 scenarios via bsc.py eval. Hooks enforce branch and destructive-command protection. Built through the skill-creator six-gate pipeline.",
   "author": {
     "name": "RollingCodes",
     "url": "https://github.com/rolling-codes"
