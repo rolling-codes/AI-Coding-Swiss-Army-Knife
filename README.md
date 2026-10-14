@@ -140,6 +140,12 @@ Commit both for team-shared memory, or add `.claude/memory*.json` to `.gitignore
   pack's Context Rule and `references/context-management.md` operationalize
   ECC's Context Window Management; ECC wins on conflict. Missing rules stop the
   full pipeline — the TDD, review, and budget requirements are defined there.
+- **longterm-ai (execution & enforcement runtime).** While this pack operates at the
+  reasoning, methodology, and skills layer (routing, kill-tests, review guidelines),
+  [longterm-ai](https://github.com/rolling-codes/longterm-ai) provides the complementary
+  underlying execution runtime. It enforces bounded tool output envelopes, fail-closed policy
+  checks, honest token accounting, deterministic acceptance verification, and SQLite
+  checkpoints with side-effect reconciliation across model handoffs.
 - **Graphify (knowledge base, optional).** Durable knowledge — decisions with
   rationale, architecture changes, lessons — flows to the knowledge graph via
   the graphify skill (`/graphify`) at session end and during context

@@ -5,6 +5,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ## [Unreleased]
 
+### Added
+
+- **Integration**: Documented two-repository architecture with [`longterm-ai`](https://github.com/rolling-codes/longterm-ai) — Dev Workflow Pack acts as the methodology, skills, and routing layer, while `longterm-ai` acts as the execution runtime enforcing bounded tool envelopes, fail-closed policy, deterministic verification, and SQLite persistence.
+
 ## [2.7.0] - 2026-10-07
 
 ### Added
