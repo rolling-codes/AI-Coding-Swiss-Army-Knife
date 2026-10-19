@@ -92,6 +92,7 @@ each sibling carries guardrails this skill does not duplicate:
 | Coupling/cohesion/layering/structural health check | → **architecture-review** |
 | Generate unit/integration/edge-case/regression tests | → **test-strategy** |
 | Manage token budget, summarize, or age out stale context | → **context-compression** |
+| Suggest *when* to /compact at a logical task boundary | → **strategic-compact** |
 | Audit/prune docs against what the code actually does | → **docs-audit** |
 | Scan for vulnerabilities, CVEs, hardcoded secrets, or OWASP issues | → **security-audit** |
 | Check for outdated, deprecated, or license-problematic packages | → **dependency-check** |

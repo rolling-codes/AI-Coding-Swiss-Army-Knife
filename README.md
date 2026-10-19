@@ -73,6 +73,7 @@ Restart Claude Code (or run `/reload-plugins`) after installing — hooks regist
 | architecture-review | Coupling, cohesion, layering, dependency direction |
 | test-strategy | Unit/integration/edge-case/regression test generation |
 | context-compression | Session context budget: summarize, keep/drop, age memory |
+| strategic-compact | Advises *when* to /compact at logical task boundaries (chains with context-compression) |
 | docs-audit | Docs vs. code drift: current/stale/dead/gap classification |
 | security-audit | Vulnerability scanning: deps (osv-scanner), SAST (semgrep), secrets |
 | dependency-check | Outdated, deprecated, and license-problematic package detection |

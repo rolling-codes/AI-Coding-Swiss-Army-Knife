@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning: [S
 
 ### Added
 
+- **`strategic-compact` skill** (slot 1 of `UPGRADE-SLOTS.md`, origin: ECC): advises *when* to `/compact` at logical task boundaries (research→plan, after a milestone, after a failed approach), chaining with `context-compression` which decides *what* to keep/drop. SKILL.md sourced from the real ECC file (`affaan-m/everything-claude-code`); the ECC `suggest-compact.js` hook is intentionally **not** bundled (this pack ships only branch protection), so the skill is advisory here — that limitation is stated in the skill body. `context-compression` is retained (the two do different jobs). Routed in `dev-workflow/SKILL.md`, `references/skill-routing.md`, and `README.md`.
 - **Integration**: Documented two-repository architecture with [`longterm-ai`](https://github.com/rolling-codes/longterm-ai) — Dev Workflow Pack acts as the methodology, skills, and routing layer, while `longterm-ai` acts as the execution runtime enforcing bounded tool envelopes, fail-closed policy, deterministic verification, and SQLite persistence.
 
 ## [2.7.0] - 2026-10-07

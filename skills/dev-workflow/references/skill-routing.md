@@ -70,7 +70,8 @@ one primary and zero or one supporting skill.
 | scope-creep | Classify a mid-build addition before it's absorbed | New feature/change/dep appears mid-build | Original task; a project not yet started |
 | architecture-review | Structural health: coupling/cohesion/layering/deps | "is this well structured", pre-v-next | Line-level correctness (→ code-review); doc drift; style |
 | test-strategy | Enumerate cases + write unit/integration/regression tests | "write tests", "what edge cases", post-fix | Enforcing test-first order mid-build (dev-workflow TDD) |
-| context-compression | Deliberate keep/drop of **session** context; memory aging | Budget ≥ ~50%, before manual /compact | Doc files (→ docs-audit); code structure; routine memory writes |
+| context-compression | Deliberate keep/drop of **session** context; memory aging | Budget ≥ ~50%, before manual /compact | Doc files (→ docs-audit); code structure; routine memory writes; *when* to compact (→ strategic-compact) |
+| strategic-compact | Advises *when* to /compact at a logical task boundary (research→plan, after a milestone) | Multi-phase session nearing a context limit at a natural break | *What* to keep/drop (→ context-compression); it only signals timing |
 | docs-audit | **Doc files** vs current code: current/stale/dead/gap | "are the docs stale", post-release doc pass | Session context (→ context-compression); code structure; net-new authoring |
 | security-audit | Vulnerability scanning: dep CVEs (osv-scanner), SAST (semgrep), secrets | "check for vulnerabilities", "CVE scan", "any secrets in this" | General code quality (→ code-review); outdated packages (→ dependency-check) |
 | dependency-check | Outdated / deprecated / license-problematic packages | "are deps up to date", "outdated packages", "license compliance" | CVE scanning (→ security-audit); upgrading packages (→ dev-workflow) |
